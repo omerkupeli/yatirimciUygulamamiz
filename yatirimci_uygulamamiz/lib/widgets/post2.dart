@@ -58,7 +58,7 @@ Widget post2(BuildContext context) {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(20)),
             color: Colors.transparent,
-            border: Border.all(color: Colors.black, width: 1),
+            border: Border.all(color: Colors.transparent, width: 1),
           ),
           child: Padding(
             padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
