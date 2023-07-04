@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:yatirimci_uygulamamiz/screens/MyProfilePage.dart';
 import 'package:yatirimci_uygulamamiz/screens/Panels.dart';
 import 'package:yatirimci_uygulamamiz/screens/Searching.dart';
+import 'package:yatirimci_uygulamamiz/widgets/buildNavicon2.dart';
 import '../screens/HomePage.dart';
 import 'buildNavIcon.dart';
 
@@ -24,8 +25,7 @@ Widget buildBottomNavBar(BuildContext context, Widget currentPage) {
             buildNavIcon(Icons.add_box_outlined, false, context, HomePage()),
             buildNavIcon(Icons.search, currentPage is SearchingPage, context,
                 SearchingPage()),
-            buildNavIcon(Icons.person, currentPage is MyProfilePage, context,
-                MyProfilePage()),
+            buildNavicon2(Icons.person, false, context, MyProfilePage())
           ],
         ),
       ),

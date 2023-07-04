@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:yatirimci_uygulamamiz/screens/MyProfilePage.dart';
+import 'package:yatirimci_uygulamamiz/widgets/buildNavIcon.dart';
 import 'package:yatirimci_uygulamamiz/widgets/navBarBottom.dart';
 import 'package:yatirimci_uygulamamiz/widgets/post.dart';
 
@@ -13,18 +15,45 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   get onPressed => null;
+  //push profilepage
+  void onPressed2() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => MyProfilePage()),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.black,
-        title: Text(
-          'Yatırımcı Uygulamamız',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 20,
-          ),
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.grey,
+        title: Row(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(20)),
+                color: Colors.grey[800],
+              ),
+              child: IconButton(
+                onPressed: onPressed2,
+                icon: Icon(Icons.person),
+                color: Colors.white,
+                iconSize: 30,
+              ),
+            ),
+            SizedBox(
+              width: 20,
+            ),
+            Text(
+              'Yatırımcı Uygulamamız',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+              ),
+            ),
+          ],
         ),
         centerTitle: true,
       ),
@@ -49,19 +78,23 @@ class _HomePageState extends State<HomePage> {
                   SizedBox(
                     height: 20,
                   ),
-                  post(context),
+                  post(
+                    context,
+                  ),
                   SizedBox(
                     height: 20,
                   ),
-                  post(context),
+                  post(
+                    context,
+                  ),
                   SizedBox(
                     height: 20,
                   ),
-                  post2(context),
+                  post2(context, 1),
                   SizedBox(
                     height: 20,
                   ),
-                  post2(context),
+                  post2(context, 1),
                 ],
               ),
             ),
