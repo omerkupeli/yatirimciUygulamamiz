@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:yatirimci_uygulamamiz/screens/InPanels/InPanelPosts.dart';
+
+import '../screens/InPanels/Rooms.dart';
 
 Widget panelInPanelList(BuildContext context, setState, isExpandedList, i,
     String title, List<TextButton> subTitles) {
@@ -63,19 +66,37 @@ Widget panelInPanelList(BuildContext context, setState, isExpandedList, i,
                   child: Row(
                     children: [
                       Expanded(
-                        child: Container(
-                          decoration: BoxDecoration(
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.white,
+                            onPrimary: Colors.black,
+                            elevation: 0,
+                            shadowColor: Colors.transparent,
+                          ).copyWith(
+                              shape: MaterialStateProperty.all(
+                                  RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
-                            border: Border.all(color: Colors.grey),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(2.0),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(color: Colors.grey),
+                          ))),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => InPanelPostsPage()));
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(color: Colors.grey),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(2.0),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(color: Colors.grey),
+                                ),
+                                child: subTitles[j],
                               ),
-                              child: subTitles[j],
                             ),
                           ),
                         ),

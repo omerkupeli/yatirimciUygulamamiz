@@ -15,9 +15,7 @@ class _PanelsPageState extends State<PanelsPage> {
           false); // Her bir elementin genişletilip genişletilmediğini tutan liste
   List<TextButton> subtitles = [
     TextButton(
-      onPressed: () {
-        // push InPanelsPage
-      },
+      onPressed: () {},
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:yatirimci_uygulamamiz/screens/InPanels/Rooms.dart';
 
 class InPanelsPage extends StatefulWidget {
   const InPanelsPage({Key? key}) : super(key: key);
@@ -30,41 +31,49 @@ class _InPanelsPageState extends State<InPanelsPage> {
         child: Padding(
           padding: const EdgeInsets.all(27.0),
           child: Column(children: [
-            Row(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.black,
-                      width: 2,
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => RoomsPage()),
+                );
+              },
+              child: Row(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.black,
+                        width: 2,
+                      ),
+                      borderRadius: BorderRadius.circular(12),
                     ),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Colors.black,
-                          width: 2,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Colors.black,
+                            width: 2,
+                          ),
+                          borderRadius: BorderRadius.circular(12),
                         ),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: Text("Yatırım Stratejileri",
-                            style: Theme.of(context).textTheme.headline6),
+                        child: Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Text("Yatırım Stratejileri",
+                              style: Theme.of(context).textTheme.headline6),
+                        ),
                       ),
                     ),
                   ),
-                ),
-                IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.forward_outlined,
-                      size: 30,
-                    )),
-              ],
+                  IconButton(
+                      onPressed: () {},
+                      icon: Icon(
+                        Icons.forward_outlined,
+                        size: 30,
+                      )),
+                ],
+              ),
             ),
             SizedBox(height: 20),
             Row(
