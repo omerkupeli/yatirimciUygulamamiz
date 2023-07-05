@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:yatirimci_uygulamamiz/screens/Panels.dart';
+import 'package:yatirimci_uygulamamiz/screens/Settings/MyAccount.dart';
+import 'package:yatirimci_uygulamamiz/screens/Settings/panelSettings.dart';
 import 'package:yatirimci_uygulamamiz/widgets/post.dart';
 import 'package:yatirimci_uygulamamiz/widgets/post2.dart';
 
@@ -66,15 +69,105 @@ class _MyProfilePageState extends State<MyProfilePage> {
                 ),
                 PopupMenuItem<String>(
                   value: 'option3',
-                  child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 16),
-                    child: Row(
-                      children: [
-                        Icon(Icons.settings),
-                        SizedBox(width: 10),
-                        Text("Ayarlar ve Gizlilik"),
-                      ],
-                    ),
+                  child: Column(
+                    children: [
+                      PopupMenuButton<String>(
+                        itemBuilder: (BuildContext context) =>
+                            <PopupMenuEntry<String>>[
+                          PopupMenuItem<String>(
+                            value: 'suboption1',
+                            child: Row(
+                              children: [
+                                Icon(Icons.person),
+                                Text('Hesabım'),
+                              ],
+                            ),
+                          ),
+                          PopupMenuItem<String>(
+                            value: 'suboption2',
+                            child: Row(
+                              children: [
+                                Icon(Icons.security),
+                                Text('Gizlilik'),
+                              ],
+                            ),
+                          ),
+                          PopupMenuItem<String>(
+                            value: 'suboption3',
+                            child: Row(
+                              children: [
+                                Icon(Icons.attach_money_outlined),
+                                Text('Bakiye Cüzdanım'),
+                              ],
+                            ),
+                          ),
+                          PopupMenuItem<String>(
+                            value: 'suboption4',
+                            child: Row(
+                              children: [
+                                Icon(Icons.notifications_active),
+                                Text('Bildirimler'),
+                              ],
+                            ),
+                          ),
+                          PopupMenuItem<String>(
+                            value: 'suboption5',
+                            child: Row(
+                              children: [
+                                Icon(Icons.help_center),
+                                Text('Yardım Merkezi'),
+                              ],
+                            ),
+                          ),
+                        ],
+                        color: Colors.grey[100],
+                        child: Row(
+                          children: [
+                            SizedBox(width: 16),
+                            Icon(Icons.settings),
+                            SizedBox(width: 10),
+                            Text("Ayarlar ve Gizlilik"),
+                          ],
+                        ),
+                        onSelected: (value) {
+                          if (value == 'suboption1') {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => MyAccount()),
+                            );
+                          }
+                          if (value == 'suboption2') {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => PanelSettings()),
+                            );
+                          }
+                          if (value == 'suboption3') {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => PanelSettings()),
+                            );
+                          }
+                          if (value == 'suboption4') {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => PanelSettings()),
+                            );
+                          }
+                          if (value == 'suboption5') {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => PanelSettings()),
+                            );
+                          }
+                        },
+                      ),
+                    ],
                   ),
                 ),
                 PopupMenuItem<String>(
@@ -124,30 +217,12 @@ class _MyProfilePageState extends State<MyProfilePage> {
                 }
 
                 if (value == 'option2') {
-                  showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: Text("Panel Gönderileri"),
-                          content: Row(
-                            children: [
-                              Text(
-                                "Panel Gönderilerindeki Yorumları Kapat",
-                                maxLines: 3,
-                                overflow: TextOverflow.ellipsis,
-                              )
-                            ],
-                          ),
-                          actions: [
-                            TextButton(
-                              child: Text("Kapat"),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                          ],
-                        );
-                      });
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => PanelSettings(),
+                    ),
+                  );
                 }
 
                 if (value == 'option3') {}
