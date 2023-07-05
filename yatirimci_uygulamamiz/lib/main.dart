@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:yatirimci_uygulamamiz/screens/HomePage.dart';
+import 'package:yatirimci_uygulamamiz/screens/InPanels.dart';
 
 void main() {
   runApp(const MyApp());
