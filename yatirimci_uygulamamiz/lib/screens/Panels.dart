@@ -75,7 +75,7 @@ class _PanelsPageState extends State<PanelsPage> {
                   children: [
                     for (int i = 0; i < 4; i++)
                       panelInPanelList(context, setState, isExpandedList, i,
-                          "Panel $i", subtitles)
+                          "Onur Beyin Odası $i", subtitles)
                   ],
                 ),
               ),

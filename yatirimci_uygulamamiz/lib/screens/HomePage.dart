@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:yatirimci_uygulamamiz/screens/InPanels/SlideBar.dart';
 import 'package:yatirimci_uygulamamiz/screens/MyProfilePage.dart';
 import 'package:yatirimci_uygulamamiz/widgets/buildNavIcon.dart';
 import 'package:yatirimci_uygulamamiz/widgets/navBarBottom.dart';
@@ -26,6 +27,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: NavBar(),
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: Colors.grey,

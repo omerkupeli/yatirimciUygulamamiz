@@ -11,7 +11,13 @@ Widget buildNavicon2(
       );
     },
     child: PopupMenuButton<String>(
-      color: Colors.transparent,
+      constraints: BoxConstraints(
+          maxHeight: 250, maxWidth: 200, minWidth: 200, minHeight: 250),
+      offset: Offset(-145, -270),
+      color: Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(14),
+      ),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(12)),
@@ -26,24 +32,72 @@ Widget buildNavicon2(
       ),
       itemBuilder: (BuildContext context) {
         return [
-          PopupMenuItem<String>(
-              value: 'menu1',
-              child: buildNavIcon(Icons.room, active, context, page)),
+          for (var i = 0; i < 4; i++)
+            PopupMenuItem<String>(
+                value: 'menu1',
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(12)),
+                    color: Colors.transparent,
+                    border: Border.all(color: Colors.black, width: 2),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(3.0),
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 30,
+                          height: 30,
+                          child: Image.network(
+                              "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Container(
+                          width: 110,
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Text(
+                              "Panel $i",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 15,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                )),
+          PopupMenuDivider(),
           PopupMenuItem<String>(
               value: 'menu2',
-              child: buildNavIcon(Icons.room, active, context, page)),
-          PopupMenuItem<String>(
-              value: 'menu3',
-              child: buildNavIcon(Icons.room, active, context, page)),
-          PopupMenuItem<String>(
-              value: 'menu3',
-              child: buildNavIcon(Icons.room, active, context, page)),
-          PopupMenuItem<String>(
-              value: 'menu3',
-              child: buildNavIcon(Icons.room, active, context, page)),
-          PopupMenuItem<String>(
-              value: 'menu3',
-              child: buildNavIcon(Icons.room, active, context, page)),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(12)),
+                  color: Colors.transparent,
+                  border: Border.all(color: Colors.black, width: 2),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("Sohbet Odası",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 15,
+                          )),
+                      Icon(
+                        Icons.arrow_forward_ios,
+                        color: Colors.black,
+                      ),
+                    ],
+                  ),
+                ),
+              )),
         ];
       },
       onSelected: (String value) {
