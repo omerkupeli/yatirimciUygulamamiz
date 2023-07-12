@@ -4,100 +4,67 @@ class NavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: ListView(
-        // Remove padding
-        padding: EdgeInsets.zero,
-        children: [
-          DrawerHeader(
-            decoration: BoxDecoration(
-              color: Colors.grey,
-              image: DecorationImage(
-                fit: BoxFit.cover,
-                image: NetworkImage(
-                    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtkRqqG1UjXllBfGYA2Avfeyp4prhTpAIwWw&usqp=CAU'),
-              ),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Onur Beyin Odası',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 24,
-                      ),
+      width: 80,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: ListView(
+          // Remove padding
+          padding: EdgeInsets.zero,
+          children: [
+            PopupMenuButton(
+                child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey,
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(color: Colors.grey, width: 2),
                     ),
-                    Icon(
-                      Icons.more_vert,
-                      size: 30,
+                    child: Icon(
+                      Icons.add,
+                      size: 50,
                       color: Colors.white,
-                    )
-                  ],
-                ),
-              ],
+                    )),
+                itemBuilder: (context) {
+                  return [
+                    PopupMenuItem(
+                      child: Text('Normal Oda Oluştur'),
+                    ),
+                    PopupMenuItem(
+                      child: Text('Müzik Odası Oluştur'),
+                    ),
+                    PopupMenuItem(
+                      child: Text('Şifreli Oda Oluştur'),
+                    ),
+                  ];
+                }),
+            SizedBox(
+              height: 10,
             ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
+            Divider(
+              color: Colors.black,
+              thickness: 2,
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            for (int i = 0; i < 10; i++)
+              Column(
                 children: [
-                  Icon(Icons.arrow_forward_sharp),
-                  Text(
-                    "Yazılı Sohbet Odaları",
-                    style: TextStyle(fontSize: 20),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Image.network(
+                      'https://img.freepik.com/free-photo/digital-painting-mountain-with-colorful-tree-foreground_1340-25699.jpg',
+                      width: 60,
+                      height: 60,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
                   ),
                 ],
               ),
-              Icon(Icons.add_circle_outline),
-            ],
-          ),
-          ListTile(
-            leading: Icon(Icons.tag),
-            title: Text('Yatırım Stratejileri'),
-            onTap: () => null,
-          ),
-          ListTile(
-            leading: Icon(Icons.tag),
-            title: Text('Temel Analizler'),
-            onTap: () => null,
-          ),
-          ListTile(
-            leading: Icon(Icons.tag),
-            title: Text('Teknik Analizler'),
-            onTap: () => null,
-          ),
-          Divider(),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  Icon(Icons.arrow_forward_sharp),
-                  Text(
-                    "Sesli Sohbet Odaları",
-                    style: TextStyle(fontSize: 20),
-                  ),
-                ],
-              ),
-              Icon(Icons.add_circle_outline),
-            ],
-          ),
-          ListTile(
-            leading: Icon(Icons.volume_up_outlined),
-            title: Text('Sesli Sohbet Odası1'),
-            onTap: () => null,
-          ),
-          ListTile(
-            leading: Icon(Icons.volume_up_outlined),
-            title: Text('Sesli Sohbet Odası2'),
-            onTap: () => null,
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
