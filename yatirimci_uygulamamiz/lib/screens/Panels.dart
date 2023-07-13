@@ -59,11 +59,26 @@ class _PanelsPageState extends State<PanelsPage> {
     ),
   ];
 
+  get onPressed => null;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Panels"),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text("Panels"),
+            IconButton(
+                onPressed: onPressed,
+                icon: Icon(
+                  Icons.search,
+                  size: 35,
+                  color: Colors.black,
+                  opticalSize: 10,
+                ))
+          ],
+        ),
       ),
       body: SafeArea(
         child: Stack(

@@ -332,17 +332,56 @@ class _MyProfilePageState extends State<MyProfilePage> {
                   SizedBox(
                     height: 20,
                   ),
-                  Text(
-                    "Kullanıcı Adı",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Kullanıcı Adı",
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 6,
+                            ),
+                            Text("İsim Soyisim"),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(color: Colors.black, width: 1),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                border:
+                                    Border.all(color: Colors.black, width: 1),
+                              ),
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(8, 10, 8, 10),
+                                child: Text(
+                                  "Özgeçmişim",
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              )),
+                        ),
+                      ),
+                    ],
                   ),
-                  SizedBox(
-                    height: 6,
-                  ),
-                  Text("İsim Soyisim"),
                   SizedBox(
                     height: 20,
                   ),
@@ -390,7 +429,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
                             child: TextButton(
                               onPressed: () {},
                               child: Text(
-                                "Biyografim",
+                                "Eğitimlerim",
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,

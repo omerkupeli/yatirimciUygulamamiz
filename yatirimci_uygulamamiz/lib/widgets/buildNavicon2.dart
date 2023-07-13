@@ -83,17 +83,14 @@ Widget buildNavicon2(
                 child: Padding(
                   padding: const EdgeInsets.all(5.0),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("Sohbet Odası",
+                      Text("Eğitimlerim",
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 15,
+                            fontWeight: FontWeight.bold,
                           )),
-                      Icon(
-                        Icons.arrow_forward_ios,
-                        color: Colors.black,
-                      ),
                     ],
                   ),
                 ),

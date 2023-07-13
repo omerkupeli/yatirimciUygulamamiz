@@ -29,33 +29,50 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       drawer: NavBar(),
       appBar: AppBar(
+        toolbarHeight: 90,
         automaticallyImplyLeading: false,
         backgroundColor: Colors.grey,
-        title: Row(
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(20)),
-                color: Colors.grey[800],
+        title: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Yatırımcı Uygulamamız',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                ),
               ),
-              child: IconButton(
-                onPressed: onPressed2,
-                icon: Icon(Icons.person),
-                color: Colors.white,
-                iconSize: 30,
+              SizedBox(
+                height: 5,
               ),
-            ),
-            SizedBox(
-              width: 20,
-            ),
-            Text(
-              'Yatırımcı Uygulamamız',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 20,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                      color: Colors.grey[800],
+                    ),
+                    child: IconButton(
+                      onPressed: onPressed2,
+                      icon: Icon(Icons.person),
+                      color: Colors.white,
+                      iconSize: 30,
+                    ),
+                  ),
+                  IconButton(
+                      onPressed: onPressed,
+                      icon: Icon(
+                        Icons.search,
+                        color: Colors.white,
+                        size: 30,
+                      ))
+                ],
               ),
-            ),
-          ],
+            ],
+          ),
         ),
         centerTitle: true,
       ),
