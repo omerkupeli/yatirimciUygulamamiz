@@ -48,7 +48,7 @@ class _InPanelPostsPageState extends State<InPanelPostsPage> {
               for (int i = 0; i < 10; i++)
                 Column(
                   children: [
-                    post2(context, 1),
+                    // post2(context, 1),
                     SizedBox(height: 14),
                   ],
                 )

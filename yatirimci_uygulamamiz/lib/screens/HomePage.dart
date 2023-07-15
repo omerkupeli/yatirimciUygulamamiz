@@ -1,10 +1,16 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:yatirimci_uygulamamiz/ApiService.dart';
+import 'package:yatirimci_uygulamamiz/Models/User.dart';
 import 'package:yatirimci_uygulamamiz/screens/InPanels/SlideBar.dart';
 import 'package:yatirimci_uygulamamiz/screens/MyProfilePage.dart';
 import 'package:yatirimci_uygulamamiz/widgets/buildNavIcon.dart';
 import 'package:yatirimci_uygulamamiz/widgets/navBarBottom.dart';
 import 'package:yatirimci_uygulamamiz/widgets/post.dart';
+import 'package:http/http.dart' as http;
 
+import '../Models/Post.dart';
 import '../widgets/post2.dart';
 
 class HomePage extends StatefulWidget {
@@ -15,6 +21,69 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  List<Post> posts = [];
+  ApiService _apiService = ApiService();
+  List<User> _users = [];
+
+  Future<void> fetchPosts() async {
+    final response =
+        await http.get(Uri.parse('http://192.168.1.100:8000/api/allPosts'));
+
+    if (response.statusCode == 200) {
+      List<dynamic> responseData = jsonDecode(response.body);
+
+      setState(() {
+        posts = responseData
+            .map((data) => Post.fromJson(data))
+            .toList()
+            .cast<Post>();
+        print(posts.length);
+
+        // Her bir post için ilgili kullanıcının bilgilerini al
+        for (var post in posts) {
+          getUserById(post.user_id);
+        }
+      });
+    } else {
+      throw Exception('API isteği başarısız: ${response.statusCode}');
+    }
+  }
+
+  Future<void> getUserById(int userId) async {
+    final response = await http
+        .get(Uri.parse('http://192.168.1.100:8000/api/userById/$userId'));
+
+    if (response.statusCode == 200) {
+      dynamic responseData = jsonDecode(response.body);
+
+      if (responseData is List) {
+        for (var data in responseData) {
+          if (data is Map<String, dynamic>) {
+            setState(() {
+              var user = User.fromJson(data);
+              _users.add(user);
+            });
+          }
+        }
+        print(_users.length);
+      } else if (responseData is Map<String, dynamic>) {
+        setState(() {
+          var user = User.fromJson(responseData);
+          _users.add(user);
+          print(_users.length);
+        });
+      }
+    } else {
+      throw Exception('API isteği başarısız: ${response.statusCode}');
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchPosts();
+  }
+
   get onPressed => null;
   //push profilepage
   void onPressed2() {
@@ -97,23 +166,17 @@ class _HomePageState extends State<HomePage> {
                   SizedBox(
                     height: 20,
                   ),
-                  post(
-                    context,
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  post(
-                    context,
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  post2(context, 1),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  post2(context, 1),
+                  for (var post in posts)
+                    for (var user in _users)
+                      if (post.user_id == user.id)
+                        Column(
+                          children: [
+                            post2(context, 1, post, user),
+                            SizedBox(
+                              height: 20,
+                            ),
+                          ],
+                        ),
                 ],
               ),
             ),

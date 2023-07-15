@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:yatirimci_uygulamamiz/Models/User.dart';
 
-Widget post2(BuildContext context, double scale) {
+import '../Models/Post.dart';
+
+Widget post2(BuildContext context, double scale, Post post, User user) {
+  var onPressed;
   return Transform.scale(
     scale: scale,
     child: Container(
-      height: double.minPositive + 480,
+      height: double.minPositive + 550,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(
           Radius.circular(20),
@@ -19,32 +23,47 @@ Widget post2(BuildContext context, double scale) {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
-                    children: [
-                      Row(
-                        children: [
-                          SizedBox(width: 2),
-                          Image.network(
-                            'https://cdn-icons-png.flaticon.com/512/64/64572.png',
-                            height: 50,
-                            width: 50,
-                          ),
-                        ],
-                      ),
-                      SizedBox(width: 10),
-                      Text("Kullanıcı Adı", style: TextStyle(fontSize: 20)),
-                    ],
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: [
+                        Row(
+                          children: [
+                            SizedBox(width: 2),
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(
+                                  25), // Yarıçapı yarım resim boyutu kadar ayarlayın
+                              child: Image.network(
+                                user.image ?? "",
+                                height: 50,
+                                width: 50,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(width: 10),
+                        Text(
+                          user.name ?? "",
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
-              Container(
+              Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: Container(
                   child: Text(
-                'Bu bir örnek metindir. Bu metin birden fazla satıra sahip olabilir. Gönderinin tamamını görmek için gönderiye tıklayın....',
-                style: TextStyle(fontSize: 16),
-                maxLines: 5, // Maksimum 2 satır göster
-                overflow:
-                    TextOverflow.ellipsis, // Taşan metni kırp ve ... ile göster
-              ))
+                    post.body ?? "",
+                    style: TextStyle(fontSize: 16),
+                    maxLines: 5,
+                    overflow: TextOverflow.clip,
+                  ),
+                ),
+              ),
             ],
           ),
           SizedBox(height: double.minPositive + 10),
@@ -62,9 +81,9 @@ Widget post2(BuildContext context, double scale) {
                 width: double.infinity,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: Image.network(
-                            'https://www.woolha.com/media/2021/06/flutter-using-decorationimage-1200x627.jpg')
-                        .image,
+                    image: NetworkImage(
+                      post.image,
+                    ),
                     fit: BoxFit.cover,
                   ),
                   borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -79,11 +98,33 @@ Widget post2(BuildContext context, double scale) {
                       children: [
                         IconButton(
                             onPressed: onPressed,
-                            icon: Icon(
-                              Icons.info_outline,
-                              color: Colors.black,
-                              size: 35,
-                            ))
+                            icon: GestureDetector(
+                              onTap: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: Text("Bilgilendirme"),
+                                      content: Text(post.panel_id.toString() +
+                                          " numaralı panelde paylaşılan gönderi"),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: Text("Tamam"),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              },
+                              child: Icon(
+                                Icons.info_outline,
+                                color: Colors.black,
+                                size: 35,
+                              ),
+                            )),
                       ],
                     ),
                   ],
@@ -98,23 +139,26 @@ Widget post2(BuildContext context, double scale) {
                 children: [
                   SizedBox(width: 2),
                   IconButton(
-                      onPressed: onPressed,
-                      icon: Icon(
-                        Icons.heart_broken,
-                        color: Colors.black,
-                      )),
+                    onPressed: onPressed,
+                    icon: Icon(
+                      Icons.heart_broken,
+                      color: Colors.black,
+                    ),
+                  ),
                   IconButton(
-                      onPressed: onPressed,
-                      icon: Icon(
-                        Icons.comment_sharp,
-                        color: Colors.black,
-                      )),
+                    onPressed: onPressed,
+                    icon: Icon(
+                      Icons.comment_sharp,
+                      color: Colors.black,
+                    ),
+                  ),
                   IconButton(
-                      onPressed: onPressed,
-                      icon: Icon(
-                        Icons.save,
-                        color: Colors.black,
-                      )),
+                    onPressed: onPressed,
+                    icon: Icon(
+                      Icons.save,
+                      color: Colors.black,
+                    ),
+                  ),
                 ],
               ),
               PopupMenuButton<String>(
@@ -143,13 +187,11 @@ Widget post2(BuildContext context, double scale) {
                   }
                 },
                 icon: Icon(Icons.more_vert), // Dikey üç nokta ikonu
-              )
+              ),
             ],
-          )
+          ),
         ],
       ),
     ),
   );
 }
-
-void onPressed() {}
