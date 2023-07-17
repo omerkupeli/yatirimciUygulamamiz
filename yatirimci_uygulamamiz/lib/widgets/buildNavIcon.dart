@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 
 Widget buildNavIcon(
-    IconData iconData, bool active, BuildContext context, Widget page) {
+  String imageName, // Resim dosyasının adını alır
+  bool active,
+  BuildContext context,
+  Widget page,
+) {
+  final imagePath = 'assets/images/$imageName';
+
   return GestureDetector(
     onTap: () {
       Navigator.pushReplacement(
@@ -12,13 +18,17 @@ Widget buildNavIcon(
     child: Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(12)),
-        color: active ? Colors.blue : Color.fromARGB(166, 201, 201, 201),
+        border: Border.all(
+          color: active ? Colors.blue : Colors.white,
+          width: 4,
+        ),
+        color: Colors.white,
       ),
       padding: const EdgeInsets.all(8),
-      child: Icon(
-        iconData,
-        size: 25,
-        color: Colors.white,
+      child: Image.asset(
+        imagePath,
+        width: 30,
+        height: 30,
       ),
     ),
   );

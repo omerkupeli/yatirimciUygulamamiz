@@ -22,11 +22,11 @@ Widget buildBottomNavBarForRoom(BuildContext context, Widget currentPage) {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            buildNavIcon(Icons.post_add, currentPage is InPanelPostsPage,
-                context, InPanelPostsPage()),
-            buildNavIcon(Icons.live_tv_outlined, currentPage is LiveSharePage,
+            buildNavIcon('panel.png', currentPage is InPanelPostsPage, context,
+                InPanelPostsPage()),
+            buildNavIcon('canli_yayin.png', currentPage is LiveSharePage,
                 context, LiveSharePage()),
-            buildNavIcon(Icons.chat_rounded, currentPage is ChatRoomPage,
+            buildNavIcon('mesaj_balonu.png', currentPage is ChatRoomPage,
                 context, ChatRoomPage()),
           ],
         ),

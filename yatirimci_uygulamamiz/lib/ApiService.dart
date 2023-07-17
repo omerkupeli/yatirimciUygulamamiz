@@ -4,9 +4,10 @@ import 'package:http/http.dart' as http;
 import 'Models/User.dart';
 
 class ApiService {
+  String ipAdress = "192.168.137.216";
   Future<List<dynamic>> getAllPosts() async {
-    final response = await http
-        .get(Uri.parse('http://192.168.1.100:8000:8000/api/allPosts'));
+    final response =
+        await http.get(Uri.parse('http://' '$ipAdress' ':8000/api/allPosts'));
     if (response.statusCode == 200) {
       final jsonData = jsonDecode(response.body);
       return jsonData;
@@ -17,7 +18,7 @@ class ApiService {
 
   Future<List<dynamic>> getPostsByPanelId(int panelId) async {
     final response = await http.get(
-        Uri.parse('http://192.168.1.100:8000/api/postsByPanelId/$panelId'));
+        Uri.parse('http://' '$ipAdress' ':8000/api/postsByPanelId/$panelId'));
     if (response.statusCode == 200) {
       final jsonData = jsonDecode(response.body);
       return jsonData;
@@ -28,7 +29,7 @@ class ApiService {
 
   Future<User> getUserById(int userId) async {
     final response =
-        await http.get(Uri.parse('http://192.168.1.100:8000/api/userById/2'));
+        await http.get(Uri.parse('http://' '$ipAdress' ':8000/api/userById/2'));
     if (response.statusCode == 200) {
       final jsonData = jsonDecode(response.body);
       return User.fromJson(jsonData);
@@ -39,7 +40,7 @@ class ApiService {
 
   Future<User> getAllUsers() async {
     final response =
-        await http.get(Uri.parse('http://192.168.1.100:8000/api/allUsers'));
+        await http.get(Uri.parse('http://' '$ipAdress' ':8000/api/allUsers'));
     if (response.statusCode == 200) {
       final jsonData = jsonDecode(response.body);
       return User.fromJson(jsonData);

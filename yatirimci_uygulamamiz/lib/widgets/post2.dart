@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:yatirimci_uygulamamiz/Models/User.dart';
 
+import '../Models/Panel.dart';
 import '../Models/Post.dart';
 
-Widget post2(BuildContext context, double scale, Post post, User user) {
+Widget post2(
+    BuildContext context, double scale, Post post, User user, Panel panel) {
   var onPressed;
   return Transform.scale(
     scale: scale,
@@ -105,8 +107,8 @@ Widget post2(BuildContext context, double scale, Post post, User user) {
                                   builder: (BuildContext context) {
                                     return AlertDialog(
                                       title: Text("Bilgilendirme"),
-                                      content: Text(post.panel_id.toString() +
-                                          " numaralı panelde paylaşılan gönderi"),
+                                      content: Text(panel.name.toString() +
+                                          " adli panelde paylaşılan gönderi"),
                                       actions: [
                                         TextButton(
                                           onPressed: () {
@@ -138,25 +140,33 @@ Widget post2(BuildContext context, double scale, Post post, User user) {
               Row(
                 children: [
                   SizedBox(width: 2),
-                  IconButton(
-                    onPressed: onPressed,
-                    icon: Icon(
-                      Icons.heart_broken,
-                      color: Colors.black,
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(8, 2, 2, 2),
+                    child: IconButton(
+                      onPressed: onPressed,
+                      icon: Image.asset(
+                        'assets/images/begeni.png',
+                        width: 25,
+                        height: 25,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(2, 2, 2, 2),
+                    child: IconButton(
+                      onPressed: onPressed,
+                      icon: Image.asset(
+                        'assets/images/yorum.png',
+                        width: 25,
+                        height: 25,
+                      ),
                     ),
                   ),
                   IconButton(
                     onPressed: onPressed,
                     icon: Icon(
-                      Icons.comment_sharp,
-                      color: Colors.black,
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: onPressed,
-                    icon: Icon(
-                      Icons.save,
-                      color: Colors.black,
+                      Icons.save_outlined,
+                      color: Colors.grey,
                     ),
                   ),
                 ],

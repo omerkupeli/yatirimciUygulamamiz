@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:yatirimci_uygulamamiz/ApiService.dart';
+import 'package:yatirimci_uygulamamiz/Models/Panel.dart';
 import 'package:yatirimci_uygulamamiz/Models/User.dart';
 import 'package:yatirimci_uygulamamiz/screens/InPanels/SlideBar.dart';
 import 'package:yatirimci_uygulamamiz/screens/MyProfilePage.dart';
@@ -24,10 +25,10 @@ class _HomePageState extends State<HomePage> {
   List<Post> posts = [];
   ApiService _apiService = ApiService();
   List<User> _users = [];
-
+  List<Panel> _panels = [];
+  String ipAdress = "http://192.168.137.216:8000/api/";
   Future<void> fetchPosts() async {
-    final response =
-        await http.get(Uri.parse('http://192.168.1.100:8000/api/allPosts'));
+    final response = await http.get(Uri.parse('$ipAdress' 'allPosts'));
 
     if (response.statusCode == 200) {
       List<dynamic> responseData = jsonDecode(response.body);
@@ -42,6 +43,7 @@ class _HomePageState extends State<HomePage> {
         // Her bir post için ilgili kullanıcının bilgilerini al
         for (var post in posts) {
           getUserById(post.user_id);
+          getPanelById(post.panel_id);
         }
       });
     } else {
@@ -49,9 +51,37 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  Future<void> getPanelById(int panelId) async {
+    final response =
+        await http.get(Uri.parse('$ipAdress' 'panelsById/$panelId'));
+
+    if (response.statusCode == 200) {
+      dynamic responseData = jsonDecode(response.body);
+
+      if (responseData is List) {
+        for (var data in responseData) {
+          if (data is Map<String, dynamic>) {
+            setState(() {
+              var panel = Panel.fromJson(data);
+              _panels.add(panel);
+            });
+          }
+        }
+        print(_panels.length);
+      } else if (responseData is Map<String, dynamic>) {
+        setState(() {
+          var panel = Panel.fromJson(responseData);
+          _panels.add(panel);
+          print(_panels.length);
+        });
+      }
+    } else {
+      throw Exception('API isteği başarısız: ${response.statusCode}');
+    }
+  }
+
   Future<void> getUserById(int userId) async {
-    final response = await http
-        .get(Uri.parse('http://192.168.1.100:8000/api/userById/$userId'));
+    final response = await http.get(Uri.parse('$ipAdress' 'userById/$userId'));
 
     if (response.statusCode == 200) {
       dynamic responseData = jsonDecode(response.body);
@@ -168,15 +198,17 @@ class _HomePageState extends State<HomePage> {
                   ),
                   for (var post in posts)
                     for (var user in _users)
-                      if (post.user_id == user.id)
-                        Column(
-                          children: [
-                            post2(context, 1, post, user),
-                            SizedBox(
-                              height: 20,
-                            ),
-                          ],
-                        ),
+                      for (var panel in _panels)
+                        if (post.user_id == user.id &&
+                            post.panel_id == panel.id)
+                          Column(
+                            children: [
+                              post2(context, 1, post, user, panel),
+                              SizedBox(
+                                height: 20,
+                              ),
+                            ],
+                          ),
                 ],
               ),
             ),

@@ -20,13 +20,14 @@ Widget buildBottomNavBar(BuildContext context, Widget currentPage) {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             buildNavIcon(
-                Icons.home, currentPage is HomePage, context, HomePage()),
-            buildNavIcon(Icons.panorama_vertical_select,
-                currentPage is PanelsPage, context, PanelsPage()),
-            buildNavicon3(Icons.add, false, context, HomePage()),
-            buildNavIcon(Icons.message, currentPage is SearchingPage, context,
+                'Anasayfa.png', currentPage is HomePage, context, HomePage()),
+            buildNavIcon(
+                'panel.png', currentPage is PanelsPage, context, PanelsPage()),
+            buildNavicon3(Icons.add, false, context, HomePage(), 'paylas.png'),
+            buildNavIcon('yorum.png', currentPage is SearchingPage, context,
                 SearchingPage()),
-            buildNavicon2(Icons.person, false, context, MyProfilePage())
+            buildNavicon2(
+                Icons.person, false, context, MyProfilePage(), 'hesap.png'),
           ],
         ),
       ),

@@ -59,7 +59,18 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
                 ),
               ),
             ),
-            IconButton(onPressed: onPressed, icon: Icon(Icons.settings)),
+            IconButton(
+                onPressed: onPressed,
+                icon: ImageIcon(
+                  AssetImage('assets/images/ayarlarr.png'),
+                  color: Colors.transparent,
+                  size: 30,
+                )),
+            Image.asset(
+              'assets/images/ayarlarr.png',
+              width: 20,
+              height: 20,
+            ),
           ],
         ),
       ),
