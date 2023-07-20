@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'Models/User.dart';
 
 class ApiService {
-  String ipAdress = "192.168.137.216";
+  String ipAdress = "192.168.137.236";
   Future<List<dynamic>> getAllPosts() async {
     final response =
         await http.get(Uri.parse('http://' '$ipAdress' ':8000/api/allPosts'));

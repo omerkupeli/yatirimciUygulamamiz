@@ -26,7 +26,7 @@ class _HomePageState extends State<HomePage> {
   ApiService _apiService = ApiService();
   List<User> _users = [];
   List<Panel> _panels = [];
-  String ipAdress = "http://192.168.137.216:8000/api/";
+  String ipAdress = "http://192.168.137.236:8000/api/";
   Future<void> fetchPosts() async {
     final response = await http.get(Uri.parse('$ipAdress' 'allPosts'));
 

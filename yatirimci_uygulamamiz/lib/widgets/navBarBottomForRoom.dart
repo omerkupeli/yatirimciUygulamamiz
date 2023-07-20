@@ -12,9 +12,9 @@ import 'buildNavIcon.dart';
 
 Widget buildBottomNavBarForRoom(BuildContext context, Widget currentPage) {
   return Align(
-    alignment: Alignment.bottomCenter,
+    alignment: Alignment.topCenter,
     child: ClipRRect(
-      borderRadius: BorderRadius.vertical(top: Radius.circular(30.0)),
+      // borderRadius: BorderRadius.vertical(top: Radius.circular(30.0)),
       child: Container(
         width: double.infinity,
         padding: EdgeInsets.symmetric(vertical: 20),

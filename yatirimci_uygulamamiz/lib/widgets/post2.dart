@@ -7,6 +7,38 @@ import '../Models/Post.dart';
 Widget post2(
     BuildContext context, double scale, Post post, User user, Panel panel) {
   var onPressed;
+  void _showCommentDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        TextEditingController _commentController = TextEditingController();
+
+        return AlertDialog(
+          title: Text('Yorum Yap'),
+          content: TextField(
+            controller: _commentController,
+            decoration: InputDecoration(
+              hintText: 'Yorumunuzu buraya yazın',
+              border: OutlineInputBorder(),
+            ),
+            maxLines: 3,
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                // Burada yorumu gönderme işlemini gerçekleştirebilirsiniz
+                String comment = _commentController.text;
+                // Yorumu gönderme işlemi burada yapılabilir
+              },
+              child: Text('Gönder'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   return Transform.scale(
     scale: scale,
     child: Container(
@@ -101,32 +133,67 @@ Widget post2(
                         IconButton(
                             onPressed: onPressed,
                             icon: GestureDetector(
-                              onTap: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      title: Text("Bilgilendirme"),
-                                      content: Text(panel.name.toString() +
-                                          " adli panelde paylaşılan gönderi"),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                          child: Text("Tamam"),
+                                onTap: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        content: Container(
+                                          height: 120,
+                                          width: 120,
+                                          child: Column(
+                                            children: [
+                                              ClipRRect(
+                                                borderRadius: BorderRadius.circular(
+                                                    10), // Yarıçapı yarım resim boyutu kadar ayarlayın
+                                                child: Image.network(
+                                                  "https://via.placeholder.com/640x480.png/003399?text=provident",
+                                                  height: 80,
+                                                  width: 80,
+                                                  fit: BoxFit.cover,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Text("Panel İsmi")
+                                            ],
+                                          ),
                                         ),
-                                      ],
-                                    );
-                                  },
-                                );
-                              },
-                              child: Icon(
-                                Icons.info_outline,
-                                color: Colors.black,
-                                size: 35,
-                              ),
-                            )),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: Text("Tamam"),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(
+                                        10), // Yarıçapı yarım resim boyutu kadar ayarlayın
+                                    color: Colors.white,
+                                    border: Border.all(
+                                        color: Colors.black, width: 1),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(3.0),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(
+                                          10), // Yarıçapı yarım resim boyutu kadar ayarlayın
+                                      child: Image.network(
+                                        "https://via.placeholder.com/640x480.png/003399?text=provident",
+                                        height: 30,
+                                        width: 30,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                                ))),
                       ],
                     ),
                   ],
@@ -154,7 +221,7 @@ Widget post2(
                   Padding(
                     padding: const EdgeInsets.fromLTRB(2, 2, 2, 2),
                     child: IconButton(
-                      onPressed: onPressed,
+                      onPressed: _showCommentDialog,
                       icon: Image.asset(
                         'assets/images/yorum.png',
                         width: 25,

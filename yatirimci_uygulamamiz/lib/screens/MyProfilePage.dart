@@ -47,7 +47,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
                     padding: EdgeInsets.symmetric(horizontal: 16),
                     child: Row(
                       children: [
-                        Icon(Icons.person),
+                        ImageIcon(AssetImage('assets/images/hesap.png')),
                         SizedBox(width: 10),
                         Text("Profili Düzenle"),
                       ],
@@ -60,7 +60,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
                     padding: EdgeInsets.symmetric(horizontal: 16),
                     child: Row(
                       children: [
-                        Icon(Icons.panorama_vertical_select),
+                        ImageIcon(AssetImage('assets/images/panel_2.png')),
                         SizedBox(width: 10),
                         Text("Panel Gönderileri"),
                       ],
@@ -124,7 +124,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
                         child: Row(
                           children: [
                             SizedBox(width: 16),
-                            Icon(Icons.settings),
+                            ImageIcon(AssetImage('assets/images/ayarlarr.png')),
                             SizedBox(width: 10),
                             Text("Ayarlar ve Gizlilik"),
                           ],
@@ -176,7 +176,8 @@ class _MyProfilePageState extends State<MyProfilePage> {
                     padding: EdgeInsets.symmetric(horizontal: 16),
                     child: Row(
                       children: [
-                        Icon(Icons.language),
+                        ImageIcon(
+                            AssetImage('assets/images/dil_secenegi_2.png')),
                         SizedBox(width: 10),
                         Text("Dil Seçenekleri"),
                       ],
@@ -189,7 +190,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
                     padding: EdgeInsets.symmetric(horizontal: 16),
                     child: Row(
                       children: [
-                        Icon(Icons.dark_mode),
+                        ImageIcon(AssetImage('assets/images/gece_gorunum.png')),
                         SizedBox(width: 10),
                         Text("Karanlık Mod"),
                       ],
@@ -277,9 +278,8 @@ class _MyProfilePageState extends State<MyProfilePage> {
                           ),
                           IconButton(
                             onPressed: onLockClicked,
-                            icon: Icon(isLocked
-                                ? Icons.lock_outline_rounded
-                                : Icons.lock_open_rounded),
+                            icon: ImageIcon(
+                                AssetImage('assets/images/gizlilik.png')),
                             iconSize: 30,
                             color: Colors.grey[800],
                           ),
