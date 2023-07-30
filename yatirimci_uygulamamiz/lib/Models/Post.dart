@@ -16,7 +16,7 @@ class Post {
     return Post(
         id: json['id'],
         body: json['body'],
-        image: json['image'],
+        image: "http://192.168.56.1:8000/storage/"+json['image'],
         user_id: json['user_id'],
         panel_id: json['panel_id']);
   }

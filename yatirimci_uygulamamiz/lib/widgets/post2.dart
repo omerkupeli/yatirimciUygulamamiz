@@ -7,37 +7,134 @@ import '../Models/Post.dart';
 Widget post2(
     BuildContext context, double scale, Post post, User user, Panel panel) {
   var onPressed;
-  void _showCommentDialog() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        TextEditingController _commentController = TextEditingController();
-
-        return AlertDialog(
-          title: Text('Yorum Yap'),
-          content: TextField(
-            controller: _commentController,
-            decoration: InputDecoration(
-              hintText: 'Yorumunuzu buraya yazın',
-              border: OutlineInputBorder(),
+   void _showCommentDialog() {
+  TextEditingController _commentController = TextEditingController();
+ 
+  showModalBottomSheet(
+    context: context,
+    shape: RoundedRectangleBorder(
+      
+    ),
+    builder: (BuildContext context) {
+      return Container(
+        
+        
+        padding: EdgeInsets.all(16),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Yorumlar',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text("958 yorum"),
+              ],
             ),
-            maxLines: 3,
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-                // Burada yorumu gönderme işlemini gerçekleştirebilirsiniz
-                String comment = _commentController.text;
-                // Yorumu gönderme işlemi burada yapılabilir
-              },
-              child: Text('Gönder'),
+            Divider(),
+            SizedBox(height: 8),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Container(child: Column(
+                children: [
+                  Row(children: [
+                    Column(
+                      children: [
+                        ClipRRect(
+                         
+                          child: Image.network(
+                            "https://via.placeholder.com/640x480.png/003399?text=provident",
+                            height: 30,
+                            width: 30,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        Text("4g",style: TextStyle(fontSize: 10),)
+                      ],
+                    ),
+                    SizedBox(width: 10),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Kullanıcı Adı",style: TextStyle(fontWeight: FontWeight.bold),),
+                        Container(
+  width: 265, 
+  child: Text(
+    "Kullanıcıların yaptıkları yorumlar burada yer alacak",
+    softWrap: true, 
+    overflow: TextOverflow.clip, 
+  ),
+),
+
+
+                      ],
+                    ),
+                    Column(children: [
+                      Row(children: [
+                        IconButton(onPressed: (){}, icon: Icon(Icons.favorite_border)),
+                        Text("1",style: TextStyle(fontSize: 10),),
+                      ],),
+                      Text("Yanıtla",style: TextStyle(fontSize: 10),),
+                      ],)
+                    ],),
+                    Text(" yanıtı görüntüle")
+                ],
+              )
+                
+               
+              
+
+              ),
+            ),
+            SizedBox(height: 120),
+            
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Image.network(
+                  "https://via.placeholder.com/640x480.png/003399?text=provident",
+                  height: 50,
+                  width: 50,
+                  fit: BoxFit.cover,
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.6,
+                  height: 50,
+                  child: TextField(
+                    controller: _commentController,
+                    decoration: InputDecoration(
+                      hintText: 'Yorumunuzu buraya yazın',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(0),
+                      ),
+                      
+                    ),
+                    maxLines: 3,
+                  ),
+                ),
+                SizedBox(width: 8),
+                IconButton(onPressed: () {
+                    // Yorumu gönderme işlemleri burada yapılacak
+                    String comment = _commentController.text;
+                    // Yorumu gönderme işlemi burada yapılabilir
+
+                    // Yorum yapma alanını kapatın
+                    Navigator.of(context).pop();
+                  }, icon: Icon(Icons.send)),
+              ],
             ),
           ],
-        );
-      },
-    );
-  }
+        ),
+      );
+    },
+  );
+}
 
   return Transform.scale(
     scale: scale,
@@ -52,53 +149,56 @@ Widget post2(
       ),
       child: Column(
         children: [
-          Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        Row(
-                          children: [
-                            SizedBox(width: 2),
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(
-                                  25), // Yarıçapı yarım resim boyutu kadar ayarlayın
-                              child: Image.network(
-                                user.image ?? "",
-                                height: 50,
-                                width: 50,
-                                fit: BoxFit.cover,
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          Row(
+                            children: [
+                              SizedBox(width: 2),
+                              ClipRRect(
+                                
+                                child: Image.network(
+                                  user.image ?? "",
+                                  height: 50,
+                                  width: 50,
+                                  fit: BoxFit.cover,
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(width: 10),
-                        Text(
-                          user.name ?? "",
-                          style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold),
-                        ),
-                      ],
+                            ],
+                          ),
+                          SizedBox(width: 10),
+                          Text(
+                            user.name ?? "",
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Container(
+                    child: Text(
+                      post.body ?? "",
+                      style: TextStyle(fontSize: 16),
+                      maxLines: 5,
+                      overflow: TextOverflow.clip,
                     ),
                   ),
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: Container(
-                  child: Text(
-                    post.body ?? "",
-                    style: TextStyle(fontSize: 16),
-                    maxLines: 5,
-                    overflow: TextOverflow.clip,
-                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           SizedBox(height: double.minPositive + 10),
           Container(
@@ -175,7 +275,7 @@ Widget post2(
                                 child: Container(
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(
-                                        10), // Yarıçapı yarım resim boyutu kadar ayarlayın
+                                        50), // Yarıçapı yarım resim boyutu kadar ayarlayın
                                     color: Colors.white,
                                     border: Border.all(
                                         color: Colors.black, width: 1),
@@ -184,7 +284,7 @@ Widget post2(
                                     padding: const EdgeInsets.all(3.0),
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(
-                                          10), // Yarıçapı yarım resim boyutu kadar ayarlayın
+                                          50), // Yarıçapı yarım resim boyutu kadar ayarlayın
                                       child: Image.network(
                                         "https://via.placeholder.com/640x480.png/003399?text=provident",
                                         height: 30,

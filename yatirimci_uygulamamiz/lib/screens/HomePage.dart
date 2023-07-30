@@ -26,9 +26,16 @@ class _HomePageState extends State<HomePage> {
   ApiService _apiService = ApiService();
   List<User> _users = [];
   List<Panel> _panels = [];
-  String ipAdress = "http://192.168.137.236:8000/api/";
+  String ipAdress = "http://192.168.56.1:8000/api/";
+  Map<String, String> headers = {
+  'Content-Type': 'application/json; charset=UTF-8',
+  'Authorization': 'Bearer 21|U1rEASugJUTTclggZIWcJ2UiJPjHJpYt1Oa25vnV',
+};
+  
   Future<void> fetchPosts() async {
-    final response = await http.get(Uri.parse('$ipAdress' 'allPosts'));
+    final response = await http.get(Uri.parse('$ipAdress' 'allPosts'),
+    headers: headers,
+    );
 
     if (response.statusCode == 200) {
       List<dynamic> responseData = jsonDecode(response.body);
@@ -53,7 +60,8 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> getPanelById(int panelId) async {
     final response =
-        await http.get(Uri.parse('$ipAdress' 'panelsById/$panelId'));
+        await http.get(Uri.parse('$ipAdress' 'panelsById/$panelId'),
+        headers: headers,);
 
     if (response.statusCode == 200) {
       dynamic responseData = jsonDecode(response.body);
@@ -81,7 +89,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> getUserById(int userId) async {
-    final response = await http.get(Uri.parse('$ipAdress' 'userById/$userId'));
+    final response = await http.get(Uri.parse('$ipAdress' 'userById/$userId'),
+    headers: headers,);
 
     if (response.statusCode == 200) {
       dynamic responseData = jsonDecode(response.body);
@@ -196,19 +205,19 @@ class _HomePageState extends State<HomePage> {
                   SizedBox(
                     height: 20,
                   ),
-                  for (var post in posts)
-                    for (var user in _users)
-                      for (var panel in _panels)
-                        if (post.user_id == user.id &&
-                            post.panel_id == panel.id)
-                          Column(
-                            children: [
-                              post2(context, 1, post, user, panel),
-                              SizedBox(
-                                height: 20,
-                              ),
-                            ],
-                          ),
+                   for (var post in posts)
+                     for (var user in _users)
+                       for (var panel in _panels)
+                         if (post.user_id == user.id &&
+                             post.panel_id == panel.id)
+                           Column(
+                             children: [
+                               post2(context, 1, post, user, panel),
+                               SizedBox(
+                                 height: 20,
+                               ),
+                             ],
+                           ),
                 ],
               ),
             ),

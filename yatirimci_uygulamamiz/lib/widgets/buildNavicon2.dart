@@ -31,8 +31,8 @@ Widget buildNavicon2(IconData iconData, bool active, BuildContext context,
         padding: const EdgeInsets.all(8),
         child: Image.asset(
           imagePath,
-          width: 30,
-          height: 30,
+          width: 25,
+          height: 25,
         ),
       ),
       itemBuilder: (BuildContext context) {

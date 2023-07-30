@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'Models/User.dart';
 
 class ApiService {
-  String ipAdress = "192.168.137.236";
+  String ipAdress = "192.168.56.1";
   Future<List<dynamic>> getAllPosts() async {
     final response =
         await http.get(Uri.parse('http://' '$ipAdress' ':8000/api/allPosts'));
@@ -48,4 +48,34 @@ class ApiService {
       throw Exception('Failed to fetch user');
     }
   }
+
+  Future<void> registerUser(String name, String email, String password) async {
+  final url = 'http://192.168.56.1:8000/api/auth/register'; // Laravel API'nizin URL'sini buraya yazın
+
+  final response = await http.post(
+    Uri.parse(url),
+    body: {
+      'name': name,
+      'email': email,
+      'password': password,
+    },
+  );
+
+  if (response.statusCode == 201) {
+    // Kayıt başarılı
+    final responseData = json.decode(response.body);
+    final accessToken = responseData['access_token'];
+    print(accessToken);
+    print(responseData['user']['name']);
+
+    // Access Token'i kullanarak istediğiniz işlemi yapabilirsiniz.
+    // Örneğin, tokeni yerel veritabanında saklayabilir ve kullanıcı oturumu açtığında kullanabilirsiniz.
+  } else {
+    // Kayıt sırasında bir hata oluştu
+    // Hata mesajını gösterebilir veya başka işlemler yapabilirsiniz.
+    final responseData = json.decode(response.body);
+    final errorMessage = responseData['error'];
+    print(errorMessage);
+  }
+}
 }

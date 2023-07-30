@@ -14,7 +14,7 @@ Widget buildBottomNavBar(BuildContext context, Widget currentPage) {
       borderRadius: BorderRadius.vertical(top: Radius.circular(30.0)),
       child: Container(
         width: double.infinity,
-        padding: EdgeInsets.symmetric(vertical: 20),
+        padding: EdgeInsets.symmetric(vertical: 8),
         color: Colors.black,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
