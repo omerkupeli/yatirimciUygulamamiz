@@ -3,6 +3,7 @@ import 'package:yatirimci_uygulamamiz/screens/Auth/loginPage.dart';
 import 'package:yatirimci_uygulamamiz/screens/Auth/registerPage.dart';
 import 'package:yatirimci_uygulamamiz/screens/HomePage.dart';
 import 'package:yatirimci_uygulamamiz/screens/InPanels.dart';
+import 'package:yatirimci_uygulamamiz/screens/Panels.dart';
 import 'package:yatirimci_uygulamamiz/screens/createPost.dart';
 
 void main() {

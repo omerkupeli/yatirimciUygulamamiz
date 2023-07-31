@@ -15,7 +15,7 @@ Widget postProfile(BuildContext context) {
         decoration: BoxDecoration(
           image: DecorationImage(
             image: Image.network(
-                    'https://www.woolha.com/media/2021/06/flutter-using-decorationimage-1200x627.jpg')
+                    'http://192.168.56.1:8000/storage/posts/-1690794550.jpg')
                 .image,
             fit: BoxFit.cover,
           ),

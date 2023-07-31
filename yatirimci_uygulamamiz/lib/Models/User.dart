@@ -1,5 +1,3 @@
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 
 class User {
   final int id;
@@ -25,7 +23,7 @@ class User {
       email: json['email'],
       username: json['username'], // JSON'da "username" varsa, onu alıyoruz
       password: "",
-      image: json['image'] ?? 'https://via.placeholder.com/640x480.png/00bb88?text=rerum',
+      image: json['image'] ?? 'http://192.168.56.1:8000/storage/posts/-1690794550.jpg',
     );
   }
 

@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:yatirimci_uygulamamiz/widgets/buildNavIcon.dart';
+import 'package:yatirimci_uygulamamiz/screens/createPost.dart';
+
+import '../Models/Panel.dart';
 
 Widget buildNavicon3(IconData iconData, bool active, BuildContext context,
-    Widget page, String imageName) {
+    Widget page, String imageName, List<Panel>? panels) {
+
   final imagePath = 'assets/images/$imageName';
+ 
   return GestureDetector(
     onTap: () {
       Navigator.pushReplacement(
@@ -43,9 +47,9 @@ Widget buildNavicon3(IconData iconData, bool active, BuildContext context,
               scrollDirection: Axis.horizontal,
               child: Row(
                 children: [
-                  for (var i = 0; i < 4; i++)
+                  for (var panel in panels!)
                     PopupMenuItem<String>(
-                      value: 'menu1',
+                      value: 'panel${panel.id}',
                       child: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(12)),
@@ -55,12 +59,13 @@ Widget buildNavicon3(IconData iconData, bool active, BuildContext context,
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(10),
                           child: Image.network(
-                            'https://img.freepik.com/free-photo/digital-painting-mountain-with-colorful-tree-foreground_1340-25699.jpg',
+                            panel.image!.replaceAll("\\", "") ?? 'http://192.168.56.1:8000/storage/posts/-1690794550.jpg',
                             width: 60,
                             height: 60,
                             fit: BoxFit.cover,
                           ),
                         ),
+                        
                       ),
                     ),
                 ],
@@ -70,13 +75,11 @@ Widget buildNavicon3(IconData iconData, bool active, BuildContext context,
         ];
       },
       onSelected: (String value) {
-        // Seçilen butonun değerine göre işlemler yapabilirsiniz
-        if (value == 'menu1') {
-          // Menü 1'e tıklanıldığında yapılacak işlemler
-        } else if (value == 'menu2') {
-          // Menü 2'ye tıklanıldığında yapılacak işlemler
-        } else if (value == 'menu3') {
-          // Menü 3'e tıklanıldığında yapılacak işlemler
+        
+        for (var panel in panels!) {
+          if (value == 'panel${panel.id}') {
+           Navigator.push(context, MaterialPageRoute(builder: (context) => CreatePostScreen(panelId: panel.id,))  );
+          }
         }
       },
     ),

@@ -1,4 +1,3 @@
-import 'dart:ffi';
 import 'dart:io';
 
 import 'package:chewie/chewie.dart';
@@ -11,14 +10,18 @@ import 'package:http/http.dart' as http;
 
 
 class CreatePostScreen extends StatefulWidget {
+  final int panelId;
+
+  const CreatePostScreen({Key? key, required this.panelId}) : super(key: key);
+
   @override
   _CreatePostScreenState createState() => _CreatePostScreenState();
 }
 
+
 class _CreatePostScreenState extends State<CreatePostScreen> {
   TextEditingController _bodyController = TextEditingController();
  
-  File? _image;
   String _imagePath = '';
   String _videoPath = '';
   bool _isImageSelected = false;
@@ -26,11 +29,9 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
   int panel_id = 1;
 
   Future<void> createPost(String body, String image, int panelId) async {
-  final url = 'http://192.168.56.1:8000/api/create-post'; // Laravel API'nizin URL'sini buraya yazın
-
+  final url = 'http://192.168.56.1:8000/api/create-post';
   final Map<String, String> headers = {
-    'Authorization': 'Bearer 21|U1rEASugJUTTclggZIWcJ2UiJPjHJpYt1Oa25vnV', // Buraya geçerli erişim belirteci(access token) ekleyin
-  };
+    'Authorization': 'Bearer 13|ZPtf2IJwBPvb8OGYA6OJmk3RzYkzP2heJvvvxRwQ',   };
 
   final Map<String, String> bodyData = {
     'body': body,
@@ -410,7 +411,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                   ),
                   onPressed: () async {
                     String body = _bodyController.text;
-                    await createPost(body, _imagePath, 1);
+                    await createPost(body, _imagePath , panel_id);
                   
                     Navigator.push(
                       context,

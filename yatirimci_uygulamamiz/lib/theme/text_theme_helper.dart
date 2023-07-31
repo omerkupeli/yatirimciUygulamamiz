@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:yatirimci_uygulamamiz/core/utils/size_utils.dart';
 import 'package:yatirimci_uygulamamiz/theme/theme_helper.dart';
-import '../core/app_export.dart';
 
 class TextThemeHelper {
   static get bodyMediumWhiteA700 => theme.textTheme.bodyMedium!.copyWith(

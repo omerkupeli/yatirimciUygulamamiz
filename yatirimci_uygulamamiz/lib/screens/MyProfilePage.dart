@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:yatirimci_uygulamamiz/screens/Panels.dart';
+import 'package:yatirimci_uygulamamiz/Models/Panel.dart';
 import 'package:yatirimci_uygulamamiz/screens/Settings/MyAccount.dart';
 import 'package:yatirimci_uygulamamiz/screens/Settings/panelSettings.dart';
-import 'package:yatirimci_uygulamamiz/widgets/post.dart';
-import 'package:yatirimci_uygulamamiz/widgets/post2.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
 
 import '../widgets/navBarBottom.dart';
 import '../widgets/postProfile.dart';
@@ -21,6 +22,35 @@ class _MyProfilePageState extends State<MyProfilePage> {
     setState(() {
       isLocked = !isLocked;
     });
+  }
+
+   List<Panel> _followedPanels = [];
+  String ipAddress = "http://192.168.56.1:8000/api/";
+  Map<String, String> headers = {
+  'Content-Type': 'application/json; charset=UTF-8',
+  'Authorization': 'Bearer 11|YXVOSSMIuYha0eqb96A7J9tDaC78WBwle2a8wnOg',
+};
+
+
+ Future<void> fetchFollowedPanels() async {
+    try {
+      final response = await http.get(Uri.parse('$ipAddress''user/followed-panels'), headers: headers);
+      if (response.statusCode == 200) {
+        final responseData = json.decode(response.body) as Map<String, dynamic>;
+        final followedRooms = responseData['followed_rooms'] as List<dynamic>;
+
+        _followedPanels = followedRooms
+            .map((data) => Panel.fromJson(data))
+            .toList();
+        print(_followedPanels.length);
+      } else {
+        final responseData = json.decode(response.body);
+        final errorMessage = responseData['message'];
+        print('Error: $errorMessage');
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
   }
 
   @override
@@ -270,7 +300,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
                                 height: 70,
                                 width: 70,
                                 child: Image.network(
-                                  'https://wallpapers.com/images/hd/cool-profile-picture-87h46gcobjl5e4xu.jpg',
+                                  'http://192.168.56.1:8000/storage/posts/-1690794550.jpg',
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -479,7 +509,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
               ),
             ),
           ),
-          buildBottomNavBar(context, MyProfilePage()),
+          buildBottomNavBar(context, MyProfilePage(), _followedPanels),
         ],
       )),
     );

@@ -1,19 +1,51 @@
 import 'package:flutter/material.dart';
 import 'package:yatirimci_uygulamamiz/screens/InPanels/InPanelPosts.dart';
 
-import '../screens/InPanels/Rooms.dart';
+import '../Models/Panel.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+  void followRoom(int panel_id) async {
+    String ipAddress = "http://192.168.56.1:8000/api";
+  Map<String, String> headers = {
+  'Content-Type': 'application/json; charset=UTF-8',
+  'Authorization': 'Bearer 12|zmk7UKjyfMEnEcEbgenjUZxxwjPGC0aTHHGbtPei',
+};
+
+    try {
+      final response = await http.post(
+        Uri.parse('$ipAddress/user-follow-panel/$panel_id'),
+        headers: headers,
+      );
+
+      if (response.statusCode == 200) {
+        // Başarılı yanıt durumunda kullanıcıyı takip etme işlemi tamamlandı
+        print('Room followed successfully');
+      } else {
+        // Hata durumunda hata mesajını alın ve işleyin
+        final responseData = json.decode(response.body);
+        final errorMessage = responseData['message'];
+        print('Error: $errorMessage');
+      }
+    } catch (e) {
+      // Hata oluşursa burada ele alın
+      print('Error: $e');
+    }
+  }
 
 Widget panelInPanelList(BuildContext context, setState, isExpandedList, i,
-    String title, List<TextButton> subTitles) {
+     List<TextButton> subTitles, Panel panel) {
   var onPressed;
+  String? imagePath = panel.image;
+  String correctedImagePath = imagePath!.replaceAll("\\", "");
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       GestureDetector(
         onTap: () {
           setState(() {
-            isExpandedList[i] = !isExpandedList[
-                i]; // Tıklama durumuna göre genişletme işlemini gerçekleştiriyoruz
+            isExpandedList[panel.id] = !isExpandedList[
+                panel.id]; // Tıklama durumuna göre genişletme işlemini gerçekleştiriyoruz
           });
         },
         child: Container(
@@ -32,7 +64,7 @@ Widget panelInPanelList(BuildContext context, setState, isExpandedList, i,
                   child: SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Text(
-                      title,
+                      panel.name,
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -41,6 +73,15 @@ Widget panelInPanelList(BuildContext context, setState, isExpandedList, i,
                     ),
                   ),
                 ),
+                Image.network(
+                  correctedImagePath,
+                  height: 25,
+                  width: 25,
+
+                  ),
+                IconButton(onPressed: () {
+                  followRoom(panel.id);
+                }, icon: Icon(Icons.data_saver_on_sharp), color: Colors.white, iconSize: 30,),
                 IconButton(
                     onPressed: onPressed,
                     icon: Icon(
@@ -49,7 +90,7 @@ Widget panelInPanelList(BuildContext context, setState, isExpandedList, i,
                       color: Colors.white,
                     )),
                 Icon(
-                  isExpandedList[i]
+                  isExpandedList[panel.id]
                       ? Icons.arrow_drop_up
                       : Icons.arrow_drop_down,
                   color: Colors.white,
@@ -59,7 +100,7 @@ Widget panelInPanelList(BuildContext context, setState, isExpandedList, i,
           ),
         ),
       ),
-      if (isExpandedList[i])
+      if (isExpandedList[panel.id])
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

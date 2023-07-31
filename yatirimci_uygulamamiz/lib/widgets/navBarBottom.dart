@@ -4,10 +4,11 @@ import 'package:yatirimci_uygulamamiz/screens/Panels.dart';
 import 'package:yatirimci_uygulamamiz/screens/Searching.dart';
 import 'package:yatirimci_uygulamamiz/widgets/buildNavicon2.dart';
 import 'package:yatirimci_uygulamamiz/widgets/buildNavicon3.dart';
+import '../Models/Panel.dart';
 import '../screens/HomePage.dart';
 import 'buildNavIcon.dart';
 
-Widget buildBottomNavBar(BuildContext context, Widget currentPage) {
+Widget buildBottomNavBar(BuildContext context, Widget currentPage , List<Panel>? panels) {
   return Align(
     alignment: Alignment.bottomCenter,
     child: ClipRRect(
@@ -23,7 +24,7 @@ Widget buildBottomNavBar(BuildContext context, Widget currentPage) {
                 'Anasayfa.png', currentPage is HomePage, context, HomePage()),
             buildNavIcon(
                 'panel.png', currentPage is PanelsPage, context, PanelsPage()),
-            buildNavicon3(Icons.add, false, context, HomePage(), 'paylas.png'),
+            buildNavicon3(Icons.add, false, context, HomePage(), 'paylas.png' , panels ),
             buildNavIcon('yorum.png', currentPage is SearchingPage, context,
                 SearchingPage()),
             buildNavicon2(

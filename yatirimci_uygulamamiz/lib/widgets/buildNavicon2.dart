@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:yatirimci_uygulamamiz/widgets/buildNavIcon.dart';
 
 Widget buildNavicon2(IconData iconData, bool active, BuildContext context,
     Widget page, String imageName) {

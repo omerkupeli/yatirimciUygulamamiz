@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart%20';
 import 'package:yatirimci_uygulamamiz/widgets/panelsInPanelList.dart';
-
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import '../Models/Panel.dart';
 import '../widgets/navBarBottom.dart';
 
 class PanelsPage extends StatefulWidget {
@@ -9,6 +11,80 @@ class PanelsPage extends StatefulWidget {
 }
 
 class _PanelsPageState extends State<PanelsPage> {
+
+ List<Panel> _panels = [];
+  String ipAddress = "http://192.168.56.1:8000/api/";
+  Map<String, String> headers = {
+  'Content-Type': 'application/json; charset=UTF-8',
+  'Authorization': 'Bearer 13|ZPtf2IJwBPvb8OGYA6OJmk3RzYkzP2heJvvvxRwQ',
+};
+
+   Future<void> getAllPanels() async {
+    final response =
+        await http.get(Uri.parse('$ipAddress' 'allPanels'),
+        headers: headers,);
+
+    if (response.statusCode == 200) {
+      dynamic responseData = jsonDecode(response.body);
+
+      if (responseData is List) {
+        for (var data in responseData) {
+          if (data is Map<String, dynamic>) {
+            setState(() {
+              var panel = Panel.fromJson(data);
+              _panels.add(panel);
+            });
+          }
+        }
+        print(_panels.length);
+      } else if (responseData is Map<String, dynamic>) {
+        setState(() {
+          var panel = Panel.fromJson(responseData);
+          _panels.add(panel);
+          print(_panels.length);
+        });
+      }
+    } else {
+      throw Exception('API isteği başarısız: ${response.statusCode}');
+    }
+  }
+
+   List<Panel> _followedPanels = [];
+
+
+
+ Future<void> fetchFollowedPanels() async {
+    try {
+      final response = await http.get(Uri.parse('$ipAddress''user/followed-panels'), headers: headers);
+      if (response.statusCode == 200) {
+        final responseData = json.decode(response.body) as Map<String, dynamic>;
+        final followedRooms = responseData['followed_rooms'] as List<dynamic>;
+
+        _followedPanels = followedRooms
+            .map((data) => Panel.fromJson(data))
+            .toList();
+        print(_followedPanels.length);
+        print(_followedPanels[0].image);
+      } else {
+        final responseData = json.decode(response.body);
+        final errorMessage = responseData['message'];
+        print('Error: $errorMessage');
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
   List<bool> isExpandedList = List.generate(
       10,
       (index) =>
@@ -62,13 +138,20 @@ class _PanelsPageState extends State<PanelsPage> {
   get onPressed => null;
 
   @override
+  void initState() {
+    super.initState();
+    getAllPanels();
+    fetchFollowedPanels();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text("Panels"),
+            Text("Paneller"),
             IconButton(
                 onPressed: onPressed,
                 icon: Icon(
@@ -88,14 +171,13 @@ class _PanelsPageState extends State<PanelsPage> {
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   children: [
-                    for (int i = 0; i < 4; i++)
-                      panelInPanelList(context, setState, isExpandedList, i,
-                          "Onur Beyin Odası $i", subtitles)
+                    for (var panel in _panels)
+                      panelInPanelList(context, setState, isExpandedList, 1, subtitles , panel)
                   ],
                 ),
               ),
             ),
-            buildBottomNavBar(context, PanelsPage()),
+            buildBottomNavBar(context, PanelsPage(), _followedPanels ),
           ],
         ),
       ),

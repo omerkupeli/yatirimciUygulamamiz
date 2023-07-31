@@ -26,14 +26,39 @@ class _HomePageState extends State<HomePage> {
   ApiService _apiService = ApiService();
   List<User> _users = [];
   List<Panel> _panels = [];
-  String ipAdress = "http://192.168.56.1:8000/api/";
+  List<Panel> _followedPanels = [];
+  String ipAddress = "http://192.168.56.1:8000/api/";
   Map<String, String> headers = {
   'Content-Type': 'application/json; charset=UTF-8',
-  'Authorization': 'Bearer 21|U1rEASugJUTTclggZIWcJ2UiJPjHJpYt1Oa25vnV',
+  'Authorization': 'Bearer 13|ZPtf2IJwBPvb8OGYA6OJmk3RzYkzP2heJvvvxRwQ',
 };
+
+
+ Future<void> fetchFollowedPanels() async {
+    try {
+      final response = await http.get(Uri.parse('$ipAddress''user/followed-panels'), headers: headers);
+      if (response.statusCode == 200) {
+        final responseData = json.decode(response.body) as Map<String, dynamic>;
+        final followedRooms = responseData['followed_rooms'] as List<dynamic>;
+
+        _followedPanels = followedRooms
+            .map((data) => Panel.fromJson(data))
+            .toList();
+        print(_followedPanels.length);
+      } else {
+        final responseData = json.decode(response.body);
+        final errorMessage = responseData['message'];
+        print('Error: $errorMessage');
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
+
   
+
   Future<void> fetchPosts() async {
-    final response = await http.get(Uri.parse('$ipAdress' 'allPosts'),
+    final response = await http.get(Uri.parse('$ipAddress' 'allPosts'),
     headers: headers,
     );
 
@@ -45,7 +70,7 @@ class _HomePageState extends State<HomePage> {
             .map((data) => Post.fromJson(data))
             .toList()
             .cast<Post>();
-        print(posts.length);
+            
 
         // Her bir post için ilgili kullanıcının bilgilerini al
         for (var post in posts) {
@@ -60,7 +85,7 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> getPanelById(int panelId) async {
     final response =
-        await http.get(Uri.parse('$ipAdress' 'panelsById/$panelId'),
+        await http.get(Uri.parse('$ipAddress' 'panelsById/$panelId'),
         headers: headers,);
 
     if (response.statusCode == 200) {
@@ -89,7 +114,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> getUserById(int userId) async {
-    final response = await http.get(Uri.parse('$ipAdress' 'userById/$userId'),
+    final response = await http.get(Uri.parse('$ipAddress' 'userById/$userId'),
     headers: headers,);
 
     if (response.statusCode == 200) {
@@ -121,6 +146,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     fetchPosts();
+    fetchFollowedPanels();
   }
 
   get onPressed => null;
@@ -222,7 +248,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
-          buildBottomNavBar(context, HomePage()),
+          buildBottomNavBar(context, HomePage() , _followedPanels),
         ],
       )),
     );

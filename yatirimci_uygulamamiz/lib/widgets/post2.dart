@@ -49,7 +49,7 @@ Widget post2(
                         ClipRRect(
                          
                           child: Image.network(
-                            "https://via.placeholder.com/640x480.png/003399?text=provident",
+                            "http://192.168.56.1:8000/storage/posts/-1690794550.jpg",
                             height: 30,
                             width: 30,
                             fit: BoxFit.cover,
@@ -98,7 +98,7 @@ Widget post2(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Image.network(
-                  "https://via.placeholder.com/640x480.png/003399?text=provident",
+                  "http://192.168.56.1:8000/storage/posts/-1690794550.jpg",
                   height: 50,
                   width: 50,
                   fit: BoxFit.cover,
@@ -247,7 +247,7 @@ Widget post2(
                                                 borderRadius: BorderRadius.circular(
                                                     10), // Yarıçapı yarım resim boyutu kadar ayarlayın
                                                 child: Image.network(
-                                                  "https://via.placeholder.com/640x480.png/003399?text=provident",
+                                                  panel.image!.replaceAll("\\", "") ?? 'http://192.168.56.1:8000/storage/posts/-1690794550.jpg',
                                                   height: 80,
                                                   width: 80,
                                                   fit: BoxFit.cover,
@@ -256,7 +256,7 @@ Widget post2(
                                               SizedBox(
                                                 height: 10,
                                               ),
-                                              Text("Panel İsmi")
+                                              Text(panel.name ?? ""),
                                             ],
                                           ),
                                         ),
@@ -286,7 +286,7 @@ Widget post2(
                                       borderRadius: BorderRadius.circular(
                                           50), // Yarıçapı yarım resim boyutu kadar ayarlayın
                                       child: Image.network(
-                                        "https://via.placeholder.com/640x480.png/003399?text=provident",
+                                        "http://192.168.56.1:8000/storage/posts/-1690794550.jpg",
                                         height: 30,
                                         width: 30,
                                         fit: BoxFit.cover,
