@@ -12,7 +12,7 @@ import 'package:http/http.dart' as http;
 class CreatePostScreen extends StatefulWidget {
   final int panelId;
 
-  const CreatePostScreen({Key? key, required this.panelId}) : super(key: key);
+  CreatePostScreen({Key? key, required this.panelId}) : super(key: key);
 
   @override
   _CreatePostScreenState createState() => _CreatePostScreenState();
@@ -26,12 +26,13 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
   String _videoPath = '';
   bool _isImageSelected = false;
   bool _isVideoSelected = false;
-  int panel_id = 1;
+  int _panelId = 0;
+
 
   Future<void> createPost(String body, String image, int panelId) async {
   final url = 'http://192.168.56.1:8000/api/create-post';
   final Map<String, String> headers = {
-    'Authorization': 'Bearer 13|ZPtf2IJwBPvb8OGYA6OJmk3RzYkzP2heJvvvxRwQ',   };
+    'Authorization': 'Bearer 21|5s1hAtydZJSo3c5JOtEFsdSS3drVhN0vAbXszHPn',   };
 
   final Map<String, String> bodyData = {
     'body': body,
@@ -68,6 +69,11 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
     }
   }
 }
+@override 
+  void initState() {
+    super.initState();
+    _panelId = widget.panelId;
+  }
 
 
   @override
@@ -411,7 +417,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                   ),
                   onPressed: () async {
                     String body = _bodyController.text;
-                    await createPost(body, _imagePath , panel_id);
+                    await createPost(body, _imagePath , _panelId );
                   
                     Navigator.push(
                       context,

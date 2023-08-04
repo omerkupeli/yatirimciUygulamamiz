@@ -17,8 +17,8 @@ Widget buildNavicon3(IconData iconData, bool active, BuildContext context,
     },
     child: PopupMenuButton<String>(
       constraints: BoxConstraints(
-          maxHeight: 80, maxWidth: 450, minWidth: 450, minHeight: 80),
-      offset: Offset(-145, -100),
+          maxHeight: 95, maxWidth: 450, minWidth: 450, minHeight: 95),
+      offset: Offset(-145, -110),
       color: Colors.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(14),
@@ -50,22 +50,44 @@ Widget buildNavicon3(IconData iconData, bool active, BuildContext context,
                   for (var panel in panels!)
                     PopupMenuItem<String>(
                       value: 'panel${panel.id}',
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(12)),
-                          color: Colors.transparent,
-                          border: Border.all(color: Colors.black, width: 2),
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Image.network(
-                            panel.image!.replaceAll("\\", "") ?? 'http://192.168.56.1:8000/storage/posts/-1690794550.jpg',
-                            width: 60,
-                            height: 60,
-                            fit: BoxFit.cover,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.all(Radius.circular(12)),
+                              color: Colors.transparent,
+                              border: Border.all(color: Colors.black, width: 2),
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: Image.network(
+                                panel.image!.replaceAll("\\", "") ?? 'http://192.168.56.1:8000/storage/posts/-1690794550.jpg',
+                                width: 55,
+                                height: 55,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+
+                            
                           ),
-                        ),
-                        
+                          SizedBox(height: 5,),
+                          Row(
+      children: [
+        Container(
+            constraints: BoxConstraints(maxWidth: 55),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8.0)),
+            child: Text(panel.name,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black)) 
+        ),
+      ],
+    ),
+                        ],
                       ),
                     ),
                 ],

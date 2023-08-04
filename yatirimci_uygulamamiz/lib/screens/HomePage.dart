@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:yatirimci_uygulamamiz/ApiService.dart';
+import 'package:yatirimci_uygulamamiz/Models/Comment.dart';
 import 'package:yatirimci_uygulamamiz/Models/Panel.dart';
 import 'package:yatirimci_uygulamamiz/Models/User.dart';
 import 'package:yatirimci_uygulamamiz/screens/InPanels/SlideBar.dart';
@@ -27,12 +28,38 @@ class _HomePageState extends State<HomePage> {
   List<User> _users = [];
   List<Panel> _panels = [];
   List<Panel> _followedPanels = [];
+  List<Comment> _comments = [];
   String ipAddress = "http://192.168.56.1:8000/api/";
   Map<String, String> headers = {
   'Content-Type': 'application/json; charset=UTF-8',
-  'Authorization': 'Bearer 13|ZPtf2IJwBPvb8OGYA6OJmk3RzYkzP2heJvvvxRwQ',
+  'Authorization': 'Bearer 21|5s1hAtydZJSo3c5JOtEFsdSS3drVhN0vAbXszHPn',
 };
 
+ 
+  Future<void> fetchComments(int postId) async {
+  try {
+    final response = await http.get(Uri.parse('$ipAddress''post/$postId/comments'), headers: headers);
+    if (response.statusCode == 200) {
+      final responseData = json.decode(response.body) as Map<String, dynamic>;
+      final comments = responseData['comments'] as List<dynamic>;
+
+      _comments = comments
+          .map((data) => Comment.fromJson(data))
+          .toList();
+          print(_comments[0].comment);
+      
+    } else {
+      final responseData = json.decode(response.body);
+      final errorMessage = responseData['message'];
+      print('Error: $errorMessage');
+    }
+  } catch (e) {
+    print('Error: $e');
+  }
+}
+
+
+  
 
  Future<void> fetchFollowedPanels() async {
     try {
@@ -54,6 +81,7 @@ class _HomePageState extends State<HomePage> {
       print('Error: $e');
     }
   }
+  
 
   
 
@@ -76,6 +104,7 @@ class _HomePageState extends State<HomePage> {
         for (var post in posts) {
           getUserById(post.user_id);
           getPanelById(post.panel_id);
+          fetchComments(post.id);
         }
       });
     } else {
@@ -109,7 +138,7 @@ class _HomePageState extends State<HomePage> {
         });
       }
     } else {
-      throw Exception('API isteği başarısız: ${response.statusCode}');
+    throw Exception('API isteği başarısız: ${response.statusCode}');
     }
   }
 
@@ -144,9 +173,12 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    super.initState();
-    fetchPosts();
-    fetchFollowedPanels();
+     super.initState();
+     fetchPosts();
+     fetchFollowedPanels();
+    
+    
+    
   }
 
   get onPressed => null;
@@ -231,19 +263,20 @@ class _HomePageState extends State<HomePage> {
                   SizedBox(
                     height: 20,
                   ),
-                   for (var post in posts)
-                     for (var user in _users)
-                       for (var panel in _panels)
-                         if (post.user_id == user.id &&
-                             post.panel_id == panel.id)
-                           Column(
-                             children: [
-                               post2(context, 1, post, user, panel),
-                               SizedBox(
-                                 height: 20,
-                               ),
-                             ],
-                           ),
+                  Column(
+  children: [
+    for (var post in posts)
+      if (_users.any((user) => user.id == post.user_id) &&
+          _followedPanels.any((panel) => panel.id == post.panel_id))
+        Column(
+          children: [
+            post2(context, 1, post, _users.firstWhere((user) => user.id == post.user_id), _followedPanels.firstWhere((panel) => panel.id == post.panel_id),_comments ,_users),
+            SizedBox(height: 20),
+          ],
+        ),
+  ],
+)
+
                 ],
               ),
             ),

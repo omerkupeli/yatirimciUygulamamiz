@@ -9,7 +9,7 @@ import 'dart:convert';
     String ipAddress = "http://192.168.56.1:8000/api";
   Map<String, String> headers = {
   'Content-Type': 'application/json; charset=UTF-8',
-  'Authorization': 'Bearer 12|zmk7UKjyfMEnEcEbgenjUZxxwjPGC0aTHHGbtPei',
+  'Authorization': 'Bearer 21|5s1hAtydZJSo3c5JOtEFsdSS3drVhN0vAbXszHPn',
 };
 
     try {
@@ -63,25 +63,27 @@ Widget panelInPanelList(BuildContext context, setState, isExpandedList, i,
                 Expanded(
                   child: SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
-                    child: Text(
-                      panel.name,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20.0,
-                      ),
-                    ),
-                  ),
-                ),
-                Image.network(
-                  correctedImagePath,
-                  height: 25,
-                  width: 25,
-
-                  ),
-                IconButton(onPressed: () {
+                    child: Row(
+                      children: [
+                        Text(
+                          panel.name,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20.0,
+                          ),
+                        ),
+                        IconButton(onPressed: () {
                   followRoom(panel.id);
-                }, icon: Icon(Icons.data_saver_on_sharp), color: Colors.white, iconSize: 30,),
+                }, icon: Icon(Icons.add_circle_outline), color: Colors.white, iconSize: 30,),
+                      ],
+                    ),
+                    
+                  ),
+                  
+                ),
+                
+                
                 IconButton(
                     onPressed: onPressed,
                     icon: Icon(

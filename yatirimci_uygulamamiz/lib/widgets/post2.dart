@@ -1,21 +1,70 @@
 import 'package:flutter/material.dart';
 import 'package:yatirimci_uygulamamiz/Models/User.dart';
+import 'package:intl/intl.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
+import '../Models/Comment.dart';
 import '../Models/Panel.dart';
 import '../Models/Post.dart';
 
 Widget post2(
-    BuildContext context, double scale, Post post, User user, Panel panel) {
+    BuildContext context, double scale, Post post, User user, Panel panel, List<Comment> comments , List<User> commentUsers) {
   var onPressed;
+
+  String ipAddress = "http://192.168.56.1:8000/api/";
+  Map<String, String> headers = {
+  'Content-Type': 'application/json; charset=UTF-8',
+  'Authorization': 'Bearer 21|5s1hAtydZJSo3c5JOtEFsdSS3drVhN0vAbXszHPn',
+};
+
    void _showCommentDialog() {
   TextEditingController _commentController = TextEditingController();
- 
+
+  
+  Future<void> addComment(int postId, String commentText) async {
+  final response = await http.post(Uri.parse('$ipAddress' 'post/$postId/comment'),
+    headers: headers,
+    body: jsonEncode({'comment': commentText}),
+  );
+
+  if (response.statusCode == 201) {
+    // Yorum başarıyla oluşturuldu
+    print('Yorum başarıyla oluşturuldu.');
+  } else {
+    // Yorum oluşturulurken bir hata oluştu
+    print('Yorum oluşturulurken hata oluştu: ${response.statusCode}');
+  }
+}
+
+Text buildTimeAgoText(String createdAt) {
+  DateTime createdAtDate = DateTime.parse(createdAt);
+  DateTime now = DateTime.now();
+
+  Duration difference = now.difference(createdAtDate);
+  int daysAgo = difference.inDays;
+
+  if (daysAgo == 0) {
+    return Text('Bugün');
+  } else if (daysAgo == 1) {
+    return Text('Dün');
+  } else {
+    return Text('$daysAgo gün önce');
+  }
+}
+
+
+  
+
   showModalBottomSheet(
+    
     context: context,
+
     shape: RoundedRectangleBorder(
       
     ),
     builder: (BuildContext context) {
+
       return Container(
         
         
@@ -34,74 +83,96 @@ Widget post2(
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Text("958 yorum"),
+                Text(comments.length.toString() + " Yorum"),
               ],
             ),
             Divider(),
             SizedBox(height: 8),
-            Padding(
+           
+               Column(
+                 children: [
+                   for (var comment in comments)
+              
+              if (comment.post_id == post.id)
+                   Padding(
               padding: const EdgeInsets.all(10.0),
               child: Container(child: Column(
-                children: [
-                  Row(children: [
-                    Column(
-                      children: [
-                        ClipRRect(
-                         
-                          child: Image.network(
-                            "http://192.168.56.1:8000/storage/posts/-1690794550.jpg",
-                            height: 30,
-                            width: 30,
-                            fit: BoxFit.cover,
-                          ),
+
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(25),
+                                  child: Image.network(
+                                    user.image,
+                                    height: 50,
+                                    width: 50,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                                buildTimeAgoText(comment.created_at)
+                              ],
+                            ),
+                            SizedBox(width: 10),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(user.name,style: TextStyle(fontWeight: FontWeight.bold),),
+                                Container(
+                                  constraints: BoxConstraints(maxWidth: 245),
+                                   decoration: BoxDecoration(
+                                   borderRadius: BorderRadius.circular(8.0)),
+  
+                                   child: Text(
+                                      comment.comment.toString(),
+                                      softWrap: true, 
+                                      overflow: TextOverflow.clip, 
+                                   ),
+                                 ),
+
+
+                              ],
+                            ),
+                          ],
                         ),
-                        Text("4g",style: TextStyle(fontSize: 10),)
-                      ],
-                    ),
-                    SizedBox(width: 10),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("Kullanıcı Adı",style: TextStyle(fontWeight: FontWeight.bold),),
-                        Container(
-  width: 265, 
-  child: Text(
-    "Kullanıcıların yaptıkları yorumlar burada yer alacak",
-    softWrap: true, 
-    overflow: TextOverflow.clip, 
-  ),
-),
-
-
-                      ],
-                    ),
-                    Column(children: [
-                      Row(children: [
-                        IconButton(onPressed: (){}, icon: Icon(Icons.favorite_border)),
-                        Text("1",style: TextStyle(fontSize: 10),),
-                      ],),
-                      Text("Yanıtla",style: TextStyle(fontSize: 10),),
-                      ],)
-                    ],),
-                    Text(" yanıtı görüntüle")
-                ],
+                        Column(children: [
+                          Row(children: [
+                            IconButton(onPressed: (){}, icon: Icon(Icons.favorite_border)),
+                            Text("1",style: TextStyle(fontSize: 10),),
+                          ],),
+                          Text("Yanıtla",style: TextStyle(fontSize: 10),),
+                          ],)
+                        ],),
+                        Text(" yanıtları görüntüle")
+                    ],
               )
-                
-               
+                    
+                   
               
 
               ),
             ),
+                 ],
+               ),
             SizedBox(height: 120),
             
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Image.network(
-                  "http://192.168.56.1:8000/storage/posts/-1690794550.jpg",
-                  height: 50,
-                  width: 50,
-                  fit: BoxFit.cover,
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(25),
+                  child: Image.network(
+                    "http://192.168.56.1:8000/storage/posts/-1690794550.jpg",
+                    height: 50,
+                    width: 50,
+                    fit: BoxFit.cover,
+                  ),
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width * 0.6,
@@ -120,11 +191,8 @@ Widget post2(
                 ),
                 SizedBox(width: 8),
                 IconButton(onPressed: () {
-                    // Yorumu gönderme işlemleri burada yapılacak
                     String comment = _commentController.text;
-                    // Yorumu gönderme işlemi burada yapılabilir
-
-                    // Yorum yapma alanını kapatın
+                    addComment(post.id, comment);
                     Navigator.of(context).pop();
                   }, icon: Icon(Icons.send)),
               ],
@@ -165,7 +233,7 @@ Widget post2(
                             children: [
                               SizedBox(width: 2),
                               ClipRRect(
-                                
+                                borderRadius: BorderRadius.circular(10),
                                 child: Image.network(
                                   user.image ?? "",
                                   height: 50,
@@ -318,16 +386,21 @@ Widget post2(
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(2, 2, 2, 2),
-                    child: IconButton(
-                      onPressed: _showCommentDialog,
-                      icon: Image.asset(
-                        'assets/images/yorum.png',
-                        width: 25,
-                        height: 25,
+                  Column(
+                    children: [
+                      SizedBox(height: 2),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(2, 2, 2, 2),
+                        child: IconButton(
+                          onPressed: _showCommentDialog,
+                          icon: Image.asset(
+                            'assets/images/yorum.png',
+                            width: 25,
+                            height: 25,
+                          ),
+                        ),
                       ),
-                    ),
+                    ],
                   ),
                   IconButton(
                     onPressed: onPressed,

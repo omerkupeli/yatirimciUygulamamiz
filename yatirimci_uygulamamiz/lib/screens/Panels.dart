@@ -13,10 +13,11 @@ class PanelsPage extends StatefulWidget {
 class _PanelsPageState extends State<PanelsPage> {
 
  List<Panel> _panels = [];
+ List<Panel> _followedPanels = [];
   String ipAddress = "http://192.168.56.1:8000/api/";
   Map<String, String> headers = {
   'Content-Type': 'application/json; charset=UTF-8',
-  'Authorization': 'Bearer 13|ZPtf2IJwBPvb8OGYA6OJmk3RzYkzP2heJvvvxRwQ',
+  'Authorization': 'Bearer 21|5s1hAtydZJSo3c5JOtEFsdSS3drVhN0vAbXszHPn',
 };
 
    Future<void> getAllPanels() async {
@@ -49,7 +50,7 @@ class _PanelsPageState extends State<PanelsPage> {
     }
   }
 
-   List<Panel> _followedPanels = [];
+   
 
 
 
@@ -64,7 +65,6 @@ class _PanelsPageState extends State<PanelsPage> {
             .map((data) => Panel.fromJson(data))
             .toList();
         print(_followedPanels.length);
-        print(_followedPanels[0].image);
       } else {
         final responseData = json.decode(response.body);
         final errorMessage = responseData['message'];
@@ -74,7 +74,6 @@ class _PanelsPageState extends State<PanelsPage> {
       print('Error: $e');
     }
   }
-
 
 
 

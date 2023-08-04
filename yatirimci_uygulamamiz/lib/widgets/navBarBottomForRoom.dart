@@ -3,6 +3,7 @@ import 'package:yatirimci_uygulamamiz/screens/InPanels/ChatRoom.dart';
 import 'package:yatirimci_uygulamamiz/screens/InPanels/InPanelPosts.dart';
 import 'package:yatirimci_uygulamamiz/screens/InPanels/LiveShare.dart';
 import 'buildNavIcon.dart';
+import 'buildNavIcon4.dart';
 
 Widget buildBottomNavBarForRoom(BuildContext context, Widget currentPage) {
   return Align(
@@ -20,7 +21,7 @@ Widget buildBottomNavBarForRoom(BuildContext context, Widget currentPage) {
                 InPanelPostsPage()),
             buildNavIcon('canli_yayin.png', currentPage is LiveSharePage,
                 context, LiveSharePage()),
-            buildNavIcon('mesaj_balonu.png', currentPage is ChatRoomPage,
+            buildNavIcon4( currentPage is ChatRoomPage,
                 context, ChatRoomPage()),
           ],
         ),

@@ -16,7 +16,7 @@ class _SearchingPageState extends State<SearchingPage> {
   String ipAddress = "http://192.168.56.1:8000/api/";
   Map<String, String> headers = {
   'Content-Type': 'application/json; charset=UTF-8',
-  'Authorization': 'Bearer 11|YXVOSSMIuYha0eqb96A7J9tDaC78WBwle2a8wnOg',
+  'Authorization': 'Bearer 21|5s1hAtydZJSo3c5JOtEFsdSS3drVhN0vAbXszHPn',
 };
 
 
@@ -39,6 +39,11 @@ class _SearchingPageState extends State<SearchingPage> {
     } catch (e) {
       print('Error: $e');
     }
+  }
+  @override
+  void initState() {
+    super.initState();
+    fetchFollowedPanels();
   }
 
 
