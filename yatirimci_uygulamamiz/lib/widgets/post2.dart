@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:yatirimci_uygulamamiz/Models/User.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
+import 'package:yatirimci_uygulamamiz/screens/MyProfilePage.dart';
 import 'dart:convert';
 
 import '../Models/Comment.dart';
@@ -36,6 +37,43 @@ Widget post2(
     print('Yorum oluşturulurken hata oluştu: ${response.statusCode}');
   }
 }
+
+Future<void> likeComment(int commentId) async {
+  final response = await http.post(Uri.parse('$ipAddress' 'comment/$commentId/like'),
+    headers: headers,
+  );
+
+  if (response.statusCode == 201) {
+    // Yorum başarıyla beğenildi
+    print('Yorum başarıyla beğenildi.');
+  } else {
+    // Yorum beğenilirken bir hata oluştu
+    print('Yorum beğenilirken hata oluştu: ${response.body}');
+  }
+}
+
+bool isLiked = false;
+
+Future<void> isLikedComment(int commentId) async {
+  final response = await http.get(Uri.parse('$ipAddress' 'comment/$commentId/isliked'),
+    headers: headers,
+  );
+
+  if (response.statusCode == 201) {
+    // Yorum beğenilmiş
+    print('Yorum beğenilmiş.');
+
+    isLiked = true;
+  } else {
+    // Yorum beğenilmemiş
+    print('Yorum beğenilmemiş.');
+
+    isLiked = false;
+  }
+}
+
+
+
 
 Text buildTimeAgoText(String createdAt) {
   DateTime createdAtDate = DateTime.parse(createdAt);
@@ -128,22 +166,27 @@ Text buildTimeAgoText(String createdAt) {
                                   constraints: BoxConstraints(maxWidth: 245),
                                    decoration: BoxDecoration(
                                    borderRadius: BorderRadius.circular(8.0)),
-  
+                        
                                    child: Text(
                                       comment.comment.toString(),
                                       softWrap: true, 
                                       overflow: TextOverflow.clip, 
                                    ),
                                  ),
-
-
+                        
+                        
                               ],
                             ),
                           ],
                         ),
                         Column(children: [
                           Row(children: [
-                            IconButton(onPressed: (){}, icon: Icon(Icons.favorite_border)),
+                            IconButton(
+  onPressed: () {
+    likeComment(comment.id);
+  },
+  icon:isLiked ? Icon(Icons.favorite) : Icon(Icons.favorite_border),
+),
                             Text("1",style: TextStyle(fontSize: 10),),
                           ],),
                           Text("Yanıtla",style: TextStyle(fontSize: 10),),
@@ -204,6 +247,21 @@ Text buildTimeAgoText(String createdAt) {
   );
 }
 
+bool isLikedPost = false;
+
+Future<void> likePost(int postId) async {
+  final response = await http.post(
+    Uri.parse('$ipAddress' 'post/$postId/like'),
+    headers: headers,
+  );
+
+  if (response.statusCode == 201) {
+    print('Post Beğenildi.');
+  } else {
+    print('Post beğenirken hata: ${response.body}');
+  }
+}
+
   return Transform.scale(
     scale: scale,
     child: Container(
@@ -222,37 +280,45 @@ Text buildTimeAgoText(String createdAt) {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          Row(
-                            children: [
-                              SizedBox(width: 2),
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child: Image.network(
-                                  user.image ?? "",
-                                  height: 50,
-                                  width: 50,
-                                  fit: BoxFit.cover,
+                GestureDetector(
+                  onTap: () {
+                     Navigator.push(
+       context,
+       MaterialPageRoute(builder: (context) => MyProfilePage( profileUserId: user.id,)),
+     );
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            Row(
+                              children: [
+                                SizedBox(width: 2),
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: Image.network(
+                                    user.image ?? "",
+                                    height: 50,
+                                    width: 50,
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(width: 10),
-                          Text(
-                            user.name ?? "",
-                            style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold),
-                          ),
-                        ],
+                              ],
+                            ),
+                            SizedBox(width: 10),
+                            Text(
+                              user.name ?? "",
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(4.0),
@@ -354,7 +420,7 @@ Text buildTimeAgoText(String createdAt) {
                                       borderRadius: BorderRadius.circular(
                                           50), // Yarıçapı yarım resim boyutu kadar ayarlayın
                                       child: Image.network(
-                                        "http://192.168.56.1:8000/storage/posts/-1690794550.jpg",
+                                        panel.image!.replaceAll("\\", "") ?? 'http://192.168.56.1:8000/storage/posts/-1690794550.jpg',
                                         height: 30,
                                         width: 30,
                                         fit: BoxFit.cover,
@@ -376,16 +442,19 @@ Text buildTimeAgoText(String createdAt) {
                 children: [
                   SizedBox(width: 2),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(8, 2, 2, 2),
-                    child: IconButton(
-                      onPressed: onPressed,
-                      icon: Image.asset(
-                        'assets/images/begeni.png',
-                        width: 25,
-                        height: 25,
-                      ),
-                    ),
-                  ),
+  padding: EdgeInsets.fromLTRB(8, 2, 2, 2),
+  child: IconButton(
+    onPressed: () {
+      likePost(post.id);
+    },
+    icon: Image.asset(
+      'assets/images/begeni.png',
+      width: 25,
+      height: 25,
+    ),
+  ),
+),
+
                   Column(
                     children: [
                       SizedBox(height: 2),
@@ -402,13 +471,14 @@ Text buildTimeAgoText(String createdAt) {
                       ),
                     ],
                   ),
-                  IconButton(
-                    onPressed: onPressed,
-                    icon: Icon(
-                      Icons.save_outlined,
-                      color: Colors.grey,
-                    ),
-                  ),
+                 IconButton(
+                          onPressed: _showCommentDialog,
+                          icon: Image.asset(
+                            'assets/images/kaydet.png',
+                            width: 22,
+                            height: 22,
+                          ),
+                        ),
                 ],
               ),
               PopupMenuButton<String>(
@@ -444,4 +514,7 @@ Text buildTimeAgoText(String createdAt) {
       ),
     ),
   );
+  
 }
+
+

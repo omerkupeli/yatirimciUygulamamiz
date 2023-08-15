@@ -3,7 +3,7 @@ class User {
   final int id;
   final String name;
   final String? email;
-  final String? username; // Kullanıcı adını opsiyonel olarak belirtiyoruz
+  final String? username; 
   final String password;
   final String image;
 

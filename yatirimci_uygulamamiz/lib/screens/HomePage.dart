@@ -32,7 +32,7 @@ class _HomePageState extends State<HomePage> {
   String ipAddress = "http://192.168.56.1:8000/api/";
   Map<String, String> headers = {
   'Content-Type': 'application/json; charset=UTF-8',
-  'Authorization': 'Bearer 21|5s1hAtydZJSo3c5JOtEFsdSS3drVhN0vAbXszHPn',
+  'Authorization': 'Bearer 23|WiCIQE2rYh9w45QBy6ZZk9v9ruhjKS79fh15U7zk',
 };
 
  
@@ -81,6 +81,23 @@ class _HomePageState extends State<HomePage> {
       print('Error: $e');
     }
   }
+
+  Future<void> isPostLiked(int postId) async {
+    try {
+      final response = await http.get(Uri.parse('$ipAddress''post/$postId/isLiked'), headers: headers);
+      if (response.statusCode == 200) {
+        final responseData = json.decode(response.body) as Map<String, dynamic>;
+        final isLiked = responseData['liked'] as bool;
+        print(isLiked);
+      } else {
+        final responseData = json.decode(response.body);
+        final errorMessage = responseData['message'];
+        print('Error: $errorMessage');
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
   
 
   
@@ -100,12 +117,14 @@ class _HomePageState extends State<HomePage> {
             .cast<Post>();
             
 
-        // Her bir post için ilgili kullanıcının bilgilerini al
-        for (var post in posts) {
+        if (posts.length > 0) {
+          for (var post in posts) {
           getUserById(post.user_id);
           getPanelById(post.panel_id);
           fetchComments(post.id);
         }
+        }
+       
       });
     } else {
       throw Exception('API isteği başarısız: ${response.statusCode}');
@@ -170,12 +189,33 @@ class _HomePageState extends State<HomePage> {
       throw Exception('API isteği başarısız: ${response.statusCode}');
     }
   }
+  User user = User(id: 1, name: "name", email: "email", username: "username", password: "password", image: "http://192.168.56.1:8000/storage/posts/-1690794550.jpg");
+  Future<void> getUser() async {
+    final response = await http.get(Uri.parse('$ipAddress' 'user'),
+    headers: headers,);
+
+    if (response.statusCode == 200) {
+      dynamic responseData = jsonDecode(response.body);
+
+      
+        
+        setState(() {
+          var user1 = User.fromJson(responseData);
+          user = user1;
+        });
+
+      }
+     else {
+      throw Exception('API isteği başarısız: ${response.statusCode}');
+    }
+  }
 
   @override
   void initState() {
      super.initState();
      fetchPosts();
      fetchFollowedPanels();
+      getUser();
     
     
     
@@ -186,7 +226,7 @@ class _HomePageState extends State<HomePage> {
   void onPressed2() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => MyProfilePage()),
+      MaterialPageRoute(builder: (context) => MyProfilePage( profileUserId: user.id,)),
     );
   }
 

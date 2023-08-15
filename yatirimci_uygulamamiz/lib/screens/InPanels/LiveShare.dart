@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:yatirimci_uygulamamiz/widgets/navBarBottomForRoom.dart';
 
 class LiveSharePage extends StatefulWidget {
   const LiveSharePage({Key? key}) : super(key: key);
@@ -15,7 +16,12 @@ class _LiveSharePageState extends State<LiveSharePage> {
         title: Text("Live Share"),
       ),
       body: Center(
-        child: Text("Live Share"),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [buildBottomNavBarForRoom(context, LiveSharePage())],
+          ),
+        )
+        
       ),
     );
   }

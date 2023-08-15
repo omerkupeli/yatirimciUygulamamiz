@@ -11,26 +11,31 @@ import 'buildNavIcon.dart';
 Widget buildBottomNavBar(BuildContext context, Widget currentPage , List<Panel>? panels) {
   return Align(
     alignment: Alignment.bottomCenter,
-    child: ClipRRect(
-      borderRadius: BorderRadius.vertical(top: Radius.circular(30.0)),
-      child: Container(
-        width: double.infinity,
-        padding: EdgeInsets.symmetric(vertical: 8),
-        color: Colors.black,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            buildNavIcon(
-                'Anasayfa.png', currentPage is HomePage, context, HomePage()),
-            buildNavIcon(
-                'panel.png', currentPage is PanelsPage, context, PanelsPage()),
-            buildNavicon3(Icons.add, false, context, HomePage(), 'paylas.png' , panels ),
-            buildNavIcon('yorum.png', currentPage is SearchingPage, context,
-                SearchingPage()),
-            buildNavicon2(
-                Icons.person, false, context, MyProfilePage(), 'hesap.png'),
-          ],
-        ),
+    child: Container(
+      width: double.infinity,
+      padding: EdgeInsets.symmetric(vertical: 5),
+      
+      decoration:const BoxDecoration(
+        color: Colors.white, 
+        border: Border.symmetric(
+          horizontal:BorderSide(
+            color: Colors.grey,
+            width: 2  )
+        )          
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          buildNavIcon(
+              'Anasayfa.png', currentPage is HomePage, context, HomePage()),
+          buildNavIcon(
+              'panel.png', currentPage is PanelsPage, context, PanelsPage()),
+          buildNavicon3(Icons.add, false, context, HomePage(), 'paylas.png' , panels ),
+          buildNavIcon('yorum.png', currentPage is SearchingPage, context,
+              SearchingPage()),
+          buildNavicon2(
+              Icons.person, false, context, 'hesap.png'),
+        ],
       ),
     ),
   );

@@ -16,7 +16,7 @@ class _SearchingPageState extends State<SearchingPage> {
   String ipAddress = "http://192.168.56.1:8000/api/";
   Map<String, String> headers = {
   'Content-Type': 'application/json; charset=UTF-8',
-  'Authorization': 'Bearer 21|5s1hAtydZJSo3c5JOtEFsdSS3drVhN0vAbXszHPn',
+  'Authorization': 'Bearer 23|WiCIQE2rYh9w45QBy6ZZk9v9ruhjKS79fh15U7zk',
 };
 
 

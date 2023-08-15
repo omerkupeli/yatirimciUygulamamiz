@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 
 Widget buildNavicon2(IconData iconData, bool active, BuildContext context,
-    Widget page, String imageName) {
+     String imageName) {
   final imagePath = 'assets/images/$imageName';
   return GestureDetector(
     onTap: () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => page),
-      );
+      
     },
     child: PopupMenuButton<String>(
       constraints: BoxConstraints(

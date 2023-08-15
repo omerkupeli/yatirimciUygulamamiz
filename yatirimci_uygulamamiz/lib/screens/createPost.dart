@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
+import 'package:yatirimci_uygulamamiz/screens/HomePage.dart';
 import 'package:yatirimci_uygulamamiz/screens/publishPost.dart';
 import 'package:yatirimci_uygulamamiz/widgets/post.dart';
 import 'package:image_picker/image_picker.dart';
@@ -32,7 +33,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
   Future<void> createPost(String body, String image, int panelId) async {
   final url = 'http://192.168.56.1:8000/api/create-post';
   final Map<String, String> headers = {
-    'Authorization': 'Bearer 21|5s1hAtydZJSo3c5JOtEFsdSS3drVhN0vAbXszHPn',   };
+    'Authorization': 'Bearer 23|WiCIQE2rYh9w45QBy6ZZk9v9ruhjKS79fh15U7zk',   };
 
   final Map<String, String> bodyData = {
     'body': body,
@@ -421,7 +422,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                   
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => PublishPage()),
+                      MaterialPageRoute(builder: (context) => HomePage()),
                     );
                   }, child: Text("Paylaş")  ),
                   SizedBox(height: 16),
