@@ -27,8 +27,8 @@ Widget buildNavIcon(
       padding: const EdgeInsets.all(8),
       child: Image.asset(
         imagePath,
-        width: 25,
-        height: 25,
+        width: 20,
+        height: 20,
       ),
     ),
   );

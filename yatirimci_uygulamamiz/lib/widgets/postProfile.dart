@@ -15,15 +15,15 @@ Widget postProfile(BuildContext context, Post post, Panel panel, User user , Lis
                                       context: context,
                                       builder: (BuildContext context) {
                                         return AlertDialog(
-                                          backgroundColor: Colors.grey,
+                                          backgroundColor: Colors.transparent,
                                           content:
                                           ClipRRect(
                                                   borderRadius: BorderRadius.circular(
                                                       20),
                                             child: Image.network(
                                               post.image,
-                                              height: 350,
-                                              width: 350,
+                                              height: 400,
+                                              width: 450,
                                               fit: BoxFit.fill,
                                             ),
                                           )

@@ -448,8 +448,10 @@ class _MyProfilePageState extends State<MyProfilePage> {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 0, 14, 0),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        SizedBox(
+                          width: 50,) ,
                         IconButton(
                           onPressed: onLockClicked,
                           icon: ImageIcon(
@@ -508,14 +510,14 @@ class _MyProfilePageState extends State<MyProfilePage> {
                             ),
                             Container(
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
+                            borderRadius: BorderRadius.circular(0),
                             border: Border.all(color: Colors.black, width: 1),
                           ),
                           child: Padding(
                             padding: const EdgeInsets.all(4.0),
                             child: Container(
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
+                                  borderRadius: BorderRadius.circular(0),
                                   border:
                                       Border.all(color: Colors.black, width: 1),
                                 ),
@@ -613,62 +615,75 @@ class _MyProfilePageState extends State<MyProfilePage> {
                   SizedBox(
                     height: 20,
                   ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  //   children: [
+                  //     Container(
+                  //       decoration: BoxDecoration(
+                  //         borderRadius: BorderRadius.circular(20),
+                  //         border: Border.all(color: Colors.black, width: 1),
+                  //       ),
+                  //       child: Padding(
+                  //         padding: const EdgeInsets.all(4.0),
+                  //         child: Container(
+                  //           decoration: BoxDecoration(
+                  //             borderRadius: BorderRadius.circular(14),
+                  //             border: Border.all(color: Colors.black, width: 1),
+                  //           ),
+                  //           child: TextButton(
+                  //             onPressed: () {},
+                  //             child: Text(
+                  //               "Panel Gönderilerim",
+                  //               style: TextStyle(
+                  //                 fontSize: 16,
+                  //                 fontWeight: FontWeight.bold,
+                  //                 color: Colors.black,
+                  //               ),
+                  //             ),
+                  //           ),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //     Container(
+                  //       decoration: BoxDecoration(
+                  //         borderRadius: BorderRadius.circular(20),
+                  //         border: Border.all(color: Colors.black, width: 1),
+                  //       ),
+                  //       child: Padding(
+                  //         padding: const EdgeInsets.all(4.0),
+                  //         child: Container(
+                  //           decoration: BoxDecoration(
+                  //             borderRadius: BorderRadius.circular(14),
+                  //             border: Border.all(color: Colors.black, width: 1),
+                  //           ),
+                  //           child: TextButton(
+                  //             onPressed: () {},
+                  //             child: Text(
+                  //               "Eğitimlerim",
+                  //               style: TextStyle(
+                  //                 fontSize: 16,
+                  //                 fontWeight: FontWeight.bold,
+                  //                 color: Colors.black,
+                  //               ),
+                  //             ),
+                  //           ),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          border: Border.all(color: Colors.black, width: 1),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(4.0),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(14),
-                              border: Border.all(color: Colors.black, width: 1),
-                            ),
-                            child: TextButton(
-                              onPressed: () {},
-                              child: Text(
-                                "Panel Gönderilerim",
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          border: Border.all(color: Colors.black, width: 1),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(4.0),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(14),
-                              border: Border.all(color: Colors.black, width: 1),
-                            ),
-                            child: TextButton(
-                              onPressed: () {},
-                              child: Text(
-                                "Eğitimlerim",
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
+                      Icon(Icons.list_alt_rounded,size: 45 ,),
+                      Icon(Icons.library_books_sharp,size: 45 ,),
+                      Icon(Icons.menu_book_sharp,size: 45 ,),
                     ],
+                  ),
+                  Divider(
+                    height: 20,
+                    thickness: 1,
+                    color: Colors.grey,
                   ),
                   SizedBox(
                     height: 20,
